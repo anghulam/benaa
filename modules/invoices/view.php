@@ -18,6 +18,13 @@ $items = dbFetchAll('SELECT * FROM invoice_items WHERE invoice_id = ?', 'i', [$i
 $payments = dbFetchAll('SELECT * FROM payments WHERE invoice_id = ? ORDER BY payment_date DESC', 'i', [$id]);
 $company = currentCompany();
 
+$letterheadMarginTop = (int) ($company['letterhead_margin_top'] ?? 0);
+$letterheadMarginRight = (int) ($company['letterhead_margin_right'] ?? 0);
+$letterheadMarginBottom = (int) ($company['letterhead_margin_bottom'] ?? 0);
+$letterheadMarginLeft = (int) ($company['letterhead_margin_left'] ?? 0);
+$letterheadFile = $company['letterhead'] ?? '';
+$letterheadIsImage = $letterheadFile && in_array(strtolower((string) pathinfo($letterheadFile, PATHINFO_EXTENSION)), ['jpg', 'jpeg', 'png'], true);
+
 $sb = statusBadge($invoice['status']);
 $pageTitle = e($invoice['invoice_number']);
 $pageSubtitle = 'تفاصيل الفاتورة';
@@ -26,6 +33,24 @@ $pageActions = '<a href="' . BASE_URL . '/modules/invoices/form.php?id=' . $id .
 <button onclick="window.print()" class="btn btn-brand no-print"><i class="bi bi-printer"></i> طباعة</button>';
 require __DIR__ . '/../../includes/header.php';
 ?>
+
+<style>
+@media print {
+    @page { size: A4; margin: 0; }
+    body { margin: 0; }
+    #printArea {
+        padding: <?= $letterheadMarginTop ?>mm <?= $letterheadMarginRight ?>mm <?= $letterheadMarginBottom ?>mm <?= $letterheadMarginLeft ?>mm !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+}
+</style>
+
+<?php if ($letterheadIsImage): ?>
+<div class="print-only" style="position:fixed; inset:0; z-index:-1;">
+    <img src="<?= BASE_URL ?>/uploads/<?= e($letterheadFile) ?>" style="width:100%; height:100%; object-fit:cover;" alt="">
+</div>
+<?php endif; ?>
 
 <div class="row g-3">
     <div class="col-lg-8">

@@ -11,6 +11,29 @@ function e(?string $value): string
     return htmlspecialchars($value ?? '', ENT_QUOTES, 'UTF-8');
 }
 
+/**
+ * إعدادات النظام العامة (على مستوى المنصة بأكملها، لا شركة بعينها)
+ * تُستخدم لشعار النظام وبيانات اعتماد Google OAuth.
+ */
+function getSystemSetting(string $key, ?string $default = null): ?string
+{
+    static $cache = null;
+    if ($cache === null) {
+        $rows = dbFetchAll('SELECT setting_key, setting_value FROM system_settings');
+        $cache = array_column($rows, 'setting_value', 'setting_key');
+    }
+    return $cache[$key] ?? $default;
+}
+
+function setSystemSetting(string $key, ?string $value): void
+{
+    dbExecute(
+        'INSERT INTO system_settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)',
+        'ss',
+        [$key, $value]
+    );
+}
+
 /** تنقية سلسلة نصية وإزالة الفراغات الزائدة */
 function clean(?string $value): string
 {
@@ -211,6 +234,9 @@ function statusBadge(string $status): array
         'absent' => ['غائب', 'danger'],
         'leave' => ['إجازة', 'info'],
         'sick' => ['إجازة مرضية', 'warning'],
+        'new' => ['جديدة', 'danger'],
+        'read' => ['مقروءة', 'secondary'],
+        'replied' => ['تم الرد', 'success'],
     ];
     return $map[$status] ?? [$status, 'secondary'];
 }

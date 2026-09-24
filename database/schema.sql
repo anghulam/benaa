@@ -36,6 +36,11 @@ CREATE TABLE IF NOT EXISTS companies (
     email VARCHAR(191) NULL,
     address VARCHAR(255) NULL,
     logo VARCHAR(255) NULL,
+    letterhead VARCHAR(255) NULL,
+    letterhead_margin_top INT UNSIGNED NOT NULL DEFAULT 0,
+    letterhead_margin_right INT UNSIGNED NOT NULL DEFAULT 0,
+    letterhead_margin_bottom INT UNSIGNED NOT NULL DEFAULT 0,
+    letterhead_margin_left INT UNSIGNED NOT NULL DEFAULT 0,
     currency VARCHAR(10) NOT NULL DEFAULT 'SAR',
     plan_id INT UNSIGNED NULL,
     status ENUM('trial','active','suspended','expired') NOT NULL DEFAULT 'trial',
@@ -403,6 +408,44 @@ CREATE TABLE IF NOT EXISTS role_permissions (
     UNIQUE KEY uniq_company_role_module (company_id, role, module_key),
     CONSTRAINT fk_role_permissions_company FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE CASCADE,
     INDEX idx_role_permissions_company (company_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ---------------------------------------------------------------------
+-- رسائل نموذج "تواصل معنا" في الموقع التسويقي الخارجي
+-- ---------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS contact_messages (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(191) NOT NULL,
+    email VARCHAR(191) NOT NULL,
+    phone VARCHAR(50) NULL,
+    company_name VARCHAR(191) NULL,
+    message TEXT NOT NULL,
+    status ENUM('new','read','replied') NOT NULL DEFAULT 'new',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ---------------------------------------------------------------------
+-- إعدادات النظام العامة (على مستوى المنصة بأكملها، لا شركة بعينها):
+-- شعار النظام، وبيانات اعتماد Google OAuth المستخدمة لربط Google Drive
+-- ---------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS system_settings (
+    setting_key VARCHAR(100) NOT NULL PRIMARY KEY,
+    setting_value TEXT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ---------------------------------------------------------------------
+-- ربط كل شركة بحساب Google Drive الخاص بها (OAuth 2.0)
+-- ---------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS company_google_drive (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    company_id INT UNSIGNED NOT NULL UNIQUE,
+    drive_email VARCHAR(191) NULL,
+    access_token TEXT NOT NULL,
+    refresh_token TEXT NOT NULL,
+    token_expires_at DATETIME NOT NULL,
+    folder_id VARCHAR(191) NULL,
+    connected_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_company_google_drive_company FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 SET FOREIGN_KEY_CHECKS = 1;

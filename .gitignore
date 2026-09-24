@@ -4,9 +4,13 @@ Thumbs.db
 /uploads/contracts/*
 /uploads/logos/*
 /uploads/expenses/*
+/uploads/letterheads/*
+/uploads/system/*
 !/uploads/contracts/.gitkeep
 !/uploads/logos/.gitkeep
 !/uploads/expenses/.gitkeep
+!/uploads/letterheads/.gitkeep
+!/uploads/system/.gitkeep
 .env
 /config/installed.php
 /install/installed.lock
