@@ -1,0 +1,108 @@
+<?php
+require_once __DIR__ . '/../../includes/bootstrap.php';
+requirePermission('settings');
+
+$companyId = currentCompanyId();
+$company = dbFetchOne('SELECT * FROM companies WHERE id = ?', 'i', [$companyId]);
+$plan = $company['plan_id'] ? dbFetchOne('SELECT * FROM subscription_plans WHERE id = ?', 'i', [$company['plan_id']]) : null;
+
+$errors = [];
+$isOwnerOrAdmin = in_array(currentUser()['role'], ['owner', 'admin'], true);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isOwnerOrAdmin) {
+    verifyCsrf();
+    $name = post('name');
+    $phone = post('phone');
+    $email = post('email');
+    $address = post('address');
+    $currency = post('currency', 'SAR');
+    $taxNumber = post('tax_number');
+    $commercialRegister = post('commercial_register');
+
+    if ($name === '') $errors[] = 'الرجاء إدخال اسم الشركة';
+
+    $logo = $company['logo'];
+    $uploaded = handleFileUpload('logo', 'logos', ['jpg', 'jpeg', 'png', 'svg']);
+    if ($uploaded) $logo = $uploaded;
+
+    if (empty($errors)) {
+        dbExecute(
+            'UPDATE companies SET name=?, phone=?, email=?, address=?, currency=?, tax_number=?, commercial_register=?, logo=? WHERE id=?',
+            'ssssssssi',
+            [$name, $phone, $email, $address, $currency, $taxNumber, $commercialRegister, $logo, $companyId]
+        );
+        unset($_SESSION['company_cache']);
+        flash('success', 'تم تحديث إعدادات الشركة بنجاح');
+        redirect('/modules/settings/index.php');
+    }
+    $company = array_merge($company, compact('name', 'phone', 'email', 'address', 'currency', 'taxNumber', 'commercialRegister'));
+}
+
+$pageTitle = 'إعدادات الشركة';
+$pageSubtitle = 'إدارة بيانات وإعدادات شركتكم';
+$activeModule = 'settings';
+require __DIR__ . '/../../includes/header.php';
+?>
+
+<div class="row g-3">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">البيانات الأساسية</div>
+            <div class="card-body section-card">
+                <?php foreach ($errors as $err): ?><div class="alert alert-danger"><?= e($err) ?></div><?php endforeach; ?>
+                <form method="post" enctype="multipart/form-data">
+                    <?= csrfField() ?>
+                    <fieldset <?= $isOwnerOrAdmin ? '' : 'disabled' ?>>
+                    <div class="row">
+                        <div class="col-md-8 mb-3"><label class="form-label">اسم الشركة *</label><input type="text" name="name" class="form-control" required value="<?= e($company['name']) ?>"></div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">العملة</label>
+                            <select name="currency" class="form-select">
+                                <?php foreach (['SAR' => 'ريال سعودي', 'AED' => 'درهم إماراتي', 'EGP' => 'جنيه مصري', 'USD' => 'دولار أمريكي', 'KWD' => 'دينار كويتي'] as $code => $label): ?>
+                                    <option value="<?= $code ?>" <?= $company['currency'] === $code ? 'selected' : '' ?>><?= e($label) ?> (<?= $code ?>)</option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3"><label class="form-label">رقم الجوال</label><input type="text" name="phone" class="form-control" value="<?= e($company['phone']) ?>"></div>
+                        <div class="col-md-6 mb-3"><label class="form-label">البريد الإلكتروني</label><input type="email" name="email" class="form-control" value="<?= e($company['email']) ?>"></div>
+                        <div class="col-md-6 mb-3"><label class="form-label">السجل التجاري</label><input type="text" name="commercial_register" class="form-control" value="<?= e($company['commercial_register']) ?>"></div>
+                        <div class="col-md-6 mb-3"><label class="form-label">الرقم الضريبي</label><input type="text" name="tax_number" class="form-control" value="<?= e($company['tax_number']) ?>"></div>
+                        <div class="col-12 mb-3"><label class="form-label">العنوان</label><input type="text" name="address" class="form-control" value="<?= e($company['address']) ?>"></div>
+                        <div class="col-12 mb-3">
+                            <label class="form-label">شعار الشركة</label>
+                            <input type="file" name="logo" class="form-control">
+                            <?php if (!empty($company['logo'])): ?><img src="<?= BASE_URL ?>/uploads/<?= e($company['logo']) ?>" class="mt-2" style="max-height:60px;"><?php endif; ?>
+                        </div>
+                    </div>
+                    <button class="btn btn-brand"><i class="bi bi-check-lg"></i> حفظ التغييرات</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">الاشتراك الحالي</div>
+            <div class="card-body section-card">
+                <?php $sb = statusBadge($company['status']); ?>
+                <p class="mb-2"><span class="text-muted">الحالة: </span><span class="badge bg-<?= $sb[1] ?>"><?= e($sb[0]) ?></span></p>
+                <p class="mb-2"><span class="text-muted">الباقة: </span><?= e($plan['name'] ?? '—') ?></p>
+                <?php if ($company['status'] === 'trial' && $company['trial_ends_at']): ?>
+                    <p class="mb-2"><span class="text-muted">تنتهي التجربة في: </span><?= formatDate($company['trial_ends_at']) ?></p>
+                <?php elseif ($company['subscription_ends_at']): ?>
+                    <p class="mb-2"><span class="text-muted">ينتهي الاشتراك في: </span><?= formatDate($company['subscription_ends_at']) ?></p>
+                <?php endif; ?>
+                <?php if ($plan): ?>
+                <hr>
+                <ul class="list-unstyled small text-muted mb-0">
+                    <li class="mb-1"><i class="bi bi-people me-1"></i> حتى <?= (int) $plan['max_users'] ?> مستخدم</li>
+                    <li class="mb-1"><i class="bi bi-diagram-3 me-1"></i> حتى <?= (int) $plan['max_projects'] ?> مشروع</li>
+                    <li><i class="bi bi-hdd me-1"></i> <?= (int) $plan['max_storage_mb'] ?> ميجابايت تخزين</li>
+                </ul>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php require __DIR__ . '/../../includes/footer.php'; ?>

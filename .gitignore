@@ -1,0 +1,10 @@
+.DS_Store
+Thumbs.db
+*.log
+/uploads/contracts/*
+/uploads/logos/*
+/uploads/expenses/*
+!/uploads/contracts/.gitkeep
+!/uploads/logos/.gitkeep
+!/uploads/expenses/.gitkeep
+.env
