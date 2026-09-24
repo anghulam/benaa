@@ -52,7 +52,7 @@ $trialCompanies = count(array_filter($companies, fn($c) => $c['status'] === 'tri
 
 $pageTitle = 'إدارة الشركات المشتركة';
 $pageSubtitle = 'لوحة تحكم مالك النظام - نظرة عامة على جميع المشتركين';
-$activeModule = 'superadmin';
+$activeModule = 'superadmin-companies';
 require __DIR__ . '/../includes/header.php';
 ?>
 
@@ -97,7 +97,8 @@ require __DIR__ . '/../includes/header.php';
                     <td><?= (int) $row['projects_count'] ?></td>
                     <td><span class="badge bg-<?= $sb[1] ?>"><?= e($sb[0]) ?></span></td>
                     <td class="small text-muted"><?= formatDate($row['status'] === 'trial' ? $row['trial_ends_at'] : $row['subscription_ends_at']) ?></td>
-                    <td>
+                    <td class="text-nowrap">
+                        <a href="<?= BASE_URL ?>/superadmin/company_view.php?id=<?= (int) $row['id'] ?>" class="btn btn-sm btn-outline-secondary"><i class="bi bi-eye"></i> عرض</a>
                         <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#manageModal<?= (int) $row['id'] ?>"><i class="bi bi-gear"></i> إدارة</button>
                     </td>
                 </tr>

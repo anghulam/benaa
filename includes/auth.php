@@ -19,22 +19,69 @@ function roleLabel(string $role): string
     return $labels[$role] ?? $role;
 }
 
-/** الصلاحيات المرتبطة بكل دور - وحدات النظام المسموح الوصول إليها */
-function rolePermissions(string $role): array
+/**
+ * قائمة الوحدات القابلة للتخصيص في مصفوفة الصلاحيات، مع تسمياتها العربية.
+ * لا تشمل "dashboard" (متاحة دوماً لكل مستخدم مسجّل) ولا "roles" (إدارة
+ * الصلاحيات نفسها، متاحة فقط للمالك ومدير النظام ولا يمكن تخصيصها).
+ */
+function permissionModulesList(): array
 {
-    $all = ['dashboard', 'clients', 'projects', 'contracts', 'invoices', 'payments', 'expenses',
-        'employees', 'attendance', 'payroll', 'suppliers', 'materials', 'purchases', 'users', 'settings', 'reports'];
+    return [
+        'clients' => 'العملاء',
+        'projects' => 'المشاريع',
+        'contracts' => 'العقود',
+        'invoices' => 'الفواتير',
+        'payments' => 'الدفعات',
+        'expenses' => 'المصروفات',
+        'employees' => 'الموظفون',
+        'attendance' => 'الحضور والانصراف',
+        'payroll' => 'الرواتب',
+        'suppliers' => 'الموردون',
+        'materials' => 'المخزون والمواد',
+        'purchases' => 'أوامر الشراء',
+        'users' => 'المستخدمون',
+        'settings' => 'إعدادات الشركة',
+        'reports' => 'التقارير',
+    ];
+}
+
+/** قائمة الأدوار القابلة لتخصيص صلاحياتها (كل الأدوار عدا المالك، الذي يملك كل الصلاحيات دوماً) */
+function customizableRoles(): array
+{
+    return ['admin', 'manager', 'accountant', 'engineer', 'employee'];
+}
+
+/** الصلاحيات الافتراضية المرتبطة بكل دور - تُستخدم قبل أي تخصيص من صاحب الشركة */
+function defaultRolePermissions(string $role): array
+{
+    $all = array_keys(permissionModulesList());
 
     $map = [
         'owner' => $all,
         'admin' => $all,
-        'manager' => ['dashboard', 'clients', 'projects', 'contracts', 'invoices', 'expenses', 'attendance', 'materials', 'purchases', 'reports'],
-        'accountant' => ['dashboard', 'clients', 'invoices', 'payments', 'expenses', 'payroll', 'reports'],
-        'engineer' => ['dashboard', 'projects', 'contracts', 'materials', 'attendance'],
-        'employee' => ['dashboard', 'attendance'],
+        'manager' => ['clients', 'projects', 'contracts', 'invoices', 'expenses', 'attendance', 'materials', 'purchases', 'reports'],
+        'accountant' => ['clients', 'invoices', 'payments', 'expenses', 'payroll', 'reports'],
+        'engineer' => ['projects', 'contracts', 'materials', 'attendance'],
+        'employee' => ['attendance'],
     ];
 
-    return $map[$role] ?? ['dashboard'];
+    return $map[$role] ?? [];
+}
+
+/**
+ * جلب تخصيص صلاحيات دور معيّن ضمن شركة معيّنة، إن وُجد (خريطة module_key => allowed).
+ * ترجع null إن لم يقم صاحب الشركة بتخصيص هذا الدور بعد، فيُعتمَد حينها على المصفوفة الافتراضية.
+ * يُخزَّن الناتج في ذاكرة تخزين مؤقت ثابتة (static) لتفادي تكرار الاستعلام لكل رابط في القائمة الجانبية.
+ */
+function companyRoleOverrides(int $companyId, string $role): ?array
+{
+    static $cache = [];
+    $key = $companyId . ':' . $role;
+    if (!array_key_exists($key, $cache)) {
+        $rows = dbFetchAll('SELECT module_key, allowed FROM role_permissions WHERE company_id = ? AND role = ?', 'is', [$companyId, $role]);
+        $cache[$key] = empty($rows) ? null : array_map('boolval', array_column($rows, 'allowed', 'module_key'));
+    }
+    return $cache[$key];
 }
 
 function isLoggedIn(): bool
@@ -90,7 +137,25 @@ function can(string $module): bool
     if ((int) $user['is_super_admin'] === 1) {
         return true;
     }
-    return in_array($module, rolePermissions($user['role']), true);
+    if ($module === 'dashboard') {
+        return true; // متاحة دوماً لأي مستخدم مسجّل داخل الشركة
+    }
+    if ($user['role'] === 'owner') {
+        return true; // المالك يملك كل الصلاحيات دائماً ولا يمكن تقييده
+    }
+    if ($module === 'roles') {
+        // إدارة مصفوفة الصلاحيات نفسها متاحة فقط للمالك (أعلاه) ومدير النظام،
+        // ولا تخضع للتخصيص عبر المصفوفة تفادياً لحبس الجميع من إدارتها
+        return $user['role'] === 'admin';
+    }
+
+    $companyId = currentCompanyId();
+    $overrides = $companyId ? companyRoleOverrides($companyId, $user['role']) : null;
+    if ($overrides !== null) {
+        return !empty($overrides[$module]);
+    }
+
+    return in_array($module, defaultRolePermissions($user['role']), true);
 }
 
 /** يجب أن يكون المستخدم مسجلاً للدخول */

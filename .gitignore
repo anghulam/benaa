@@ -8,3 +8,5 @@ Thumbs.db
 !/uploads/logos/.gitkeep
 !/uploads/expenses/.gitkeep
 .env
+/config/installed.php
+/install/installed.lock
