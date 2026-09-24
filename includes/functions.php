@@ -215,6 +215,16 @@ function statusBadge(string $status): array
     return $map[$status] ?? [$status, 'secondary'];
 }
 
+/** اسم الشهر العربي المختصر من رقم الشهر (1-12) */
+function arabicMonthShort(int $month): string
+{
+    $months = [
+        1 => 'يناير', 2 => 'فبراير', 3 => 'مارس', 4 => 'أبريل', 5 => 'مايو', 6 => 'يونيو',
+        7 => 'يوليو', 8 => 'أغسطس', 9 => 'سبتمبر', 10 => 'أكتوبر', 11 => 'نوفمبر', 12 => 'ديسمبر',
+    ];
+    return $months[$month] ?? '';
+}
+
 /** ترجمة طريقة الدفع إلى نص عربي */
 function paymentMethodLabel(string $method): string
 {

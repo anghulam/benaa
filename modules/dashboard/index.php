@@ -24,9 +24,9 @@ $chartLabels = [];
 $chartRevenue = [];
 $chartExpenses = [];
 for ($i = 5; $i >= 0; $i--) {
-    $m = date('n', strtotime("-$i months"));
+    $m = (int) date('n', strtotime("-$i months"));
     $y = date('Y', strtotime("-$i months"));
-    $chartLabels[] = date('M', strtotime("-$i months"));
+    $chartLabels[] = arabicMonthShort($m);
     $rev = dbFetchOne('SELECT COALESCE(SUM(amount),0) s FROM payments WHERE company_id = ? AND MONTH(payment_date) = ? AND YEAR(payment_date) = ?', 'iii', [$companyId, $m, $y]);
     $exp = dbFetchOne('SELECT COALESCE(SUM(amount),0) s FROM expenses WHERE company_id = ? AND MONTH(expense_date) = ? AND YEAR(expense_date) = ?', 'iii', [$companyId, $m, $y]);
     $chartRevenue[] = (float) $rev['s'];
@@ -177,7 +177,7 @@ require __DIR__ . '/../../includes/header.php';
 </div>
 
 <?php
-$extraScripts = '<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+$extraScripts = '<script src="' . BASE_URL . '/assets/vendor/chartjs/chart.umd.min.js"></script>
 <script>
 new Chart(document.getElementById("financeChart"), {
     type: "line",
@@ -188,7 +188,11 @@ new Chart(document.getElementById("financeChart"), {
             { label: "المصروفات", data: ' . json_encode($chartExpenses) . ', borderColor: "#f5a623", backgroundColor: "rgba(245,166,35,0.12)", tension: 0.35, fill: true }
         ]
     },
-    options: { responsive: true, plugins: { legend: { position: "bottom", rtl: true } } }
+    options: {
+        responsive: true,
+        plugins: { legend: { position: "bottom", rtl: true, labels: { font: { family: "Cairo" } } } },
+        scales: { y: { beginAtZero: true, ticks: { font: { family: "Cairo" } } }, x: { ticks: { font: { family: "Cairo" } } } }
+    }
 });
 </script>';
 require __DIR__ . '/../../includes/footer.php';

@@ -113,7 +113,7 @@ require __DIR__ . '/../../includes/header.php';
 <?php
 $categoryLabels = array_column($expenseByCategory, 'category');
 $categoryTotals = array_map('floatval', array_column($expenseByCategory, 'total'));
-$extraScripts = '<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+$extraScripts = '<script src="' . BASE_URL . '/assets/vendor/chartjs/chart.umd.min.js"></script>
 <script>
 new Chart(document.getElementById("expenseChart"), {
     type: "bar",
@@ -121,7 +121,11 @@ new Chart(document.getElementById("expenseChart"), {
         labels: ' . json_encode($categoryLabels, JSON_UNESCAPED_UNICODE) . ',
         datasets: [{ label: "المصروفات", data: ' . json_encode($categoryTotals) . ', backgroundColor: "#f5a623", borderRadius: 6 }]
     },
-    options: { responsive: true, plugins: { legend: { display: false } } }
+    options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true, ticks: { font: { family: "Cairo" } } }, x: { ticks: { font: { family: "Cairo" } } } }
+    }
 });
 </script>';
 require __DIR__ . '/../../includes/footer.php';
