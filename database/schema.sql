@@ -389,6 +389,22 @@ CREATE TABLE IF NOT EXISTS settings (
     CONSTRAINT fk_settings_company FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- ---------------------------------------------------------------------
+-- صلاحيات الأدوار المخصَّصة لكل شركة - تتيح لمالك/مدير الشركة تحديد
+-- الوحدات المسموح بها لكل دور من موظفيه بدل الاعتماد على المصفوفة
+-- الافتراضية المبرمجة فقط
+-- ---------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS role_permissions (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    company_id INT UNSIGNED NOT NULL,
+    role ENUM('admin','manager','accountant','engineer','employee') NOT NULL,
+    module_key VARCHAR(50) NOT NULL,
+    allowed TINYINT(1) NOT NULL DEFAULT 0,
+    UNIQUE KEY uniq_company_role_module (company_id, role, module_key),
+    CONSTRAINT fk_role_permissions_company FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE CASCADE,
+    INDEX idx_role_permissions_company (company_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- ---------------------------------------------------------------------

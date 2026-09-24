@@ -54,7 +54,11 @@ $__hdrCompany = currentCompany();
                     <i class="bi bi-chevron-down text-muted small"></i>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-                    <li><a class="dropdown-item" href="<?= BASE_URL ?>/modules/settings/index.php"><i class="bi bi-gear me-2"></i> إعدادات الشركة</a></li>
+                    <?php if (isSuperAdmin() && !currentCompanyId()): ?>
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/superadmin/profile.php"><i class="bi bi-person-circle me-2"></i> الملف الشخصي</a></li>
+                    <?php elseif (can('settings')): ?>
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/modules/settings/index.php"><i class="bi bi-gear me-2"></i> إعدادات الشركة</a></li>
+                    <?php endif; ?>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item text-danger" href="<?= BASE_URL ?>/modules/auth/logout.php"><i class="bi bi-box-arrow-right me-2"></i> تسجيل الخروج</a></li>
                 </ul>

@@ -35,6 +35,7 @@ $__sbMenuGroups = [
     'النظام' => [
         ['module' => 'reports', 'label' => 'التقارير', 'icon' => 'bi-bar-chart-line', 'href' => '/modules/reports/index.php'],
         ['module' => 'users', 'label' => 'المستخدمون', 'icon' => 'bi-person-lines-fill', 'href' => '/modules/users/index.php'],
+        ['module' => 'roles', 'label' => 'الأدوار والصلاحيات', 'icon' => 'bi-shield-lock', 'href' => '/modules/roles/index.php'],
         ['module' => 'settings', 'label' => 'إعدادات الشركة', 'icon' => 'bi-gear', 'href' => '/modules/settings/index.php'],
     ],
 ];
@@ -46,12 +47,22 @@ $__sbMenuGroups = [
         <span><?= e(APP_NAME) ?></span>
     </div>
 
-    <?php if (isSuperAdmin()): ?>
+    <?php if (isSuperAdmin()):
+        $__sbSuperAdminItems = [
+            ['key' => 'superadmin-companies', 'label' => 'الشركات المشتركة', 'icon' => 'bi-building-gear', 'href' => '/superadmin/index.php'],
+            ['key' => 'superadmin-plans', 'label' => 'خطط الاشتراك', 'icon' => 'bi-tags', 'href' => '/superadmin/plans.php'],
+            ['key' => 'superadmin-activity', 'label' => 'سجل النشاطات', 'icon' => 'bi-clock-history', 'href' => '/superadmin/activity.php'],
+            ['key' => 'superadmin-admins', 'label' => 'حسابات المشرفين', 'icon' => 'bi-person-lock', 'href' => '/superadmin/admins.php'],
+            ['key' => 'superadmin-profile', 'label' => 'الملف الشخصي', 'icon' => 'bi-person-circle', 'href' => '/superadmin/profile.php'],
+        ];
+    ?>
     <div class="sidebar-section-title">إدارة النظام</div>
     <nav class="nav flex-column">
-        <a class="nav-link <?= $activeModule === 'superadmin' ? 'active' : '' ?>" href="<?= BASE_URL ?>/superadmin/index.php">
-            <i class="bi bi-building-gear"></i> الشركات المشتركة
-        </a>
+        <?php foreach ($__sbSuperAdminItems as $__sbSaItem): ?>
+            <a class="nav-link <?= $activeModule === $__sbSaItem['key'] ? 'active' : '' ?>" href="<?= BASE_URL . $__sbSaItem['href'] ?>">
+                <i class="bi <?= e($__sbSaItem['icon']) ?>"></i> <?= e($__sbSaItem['label']) ?>
+            </a>
+        <?php endforeach; ?>
     </nav>
     <?php endif; ?>
 
@@ -71,4 +82,4 @@ $__sbMenuGroups = [
         </nav>
     <?php endforeach; endif; ?>
 </aside>
-<?php unset($__sbMenuGroups, $__sbGroupTitle, $__sbGroupItems, $__sbVisibleItems, $__sbItem); ?>
+<?php unset($__sbMenuGroups, $__sbGroupTitle, $__sbGroupItems, $__sbVisibleItems, $__sbItem, $__sbSuperAdminItems, $__sbSaItem); ?>
