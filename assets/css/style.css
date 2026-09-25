@@ -95,6 +95,16 @@ h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.02em; font-wei
               var(--bn-navy-dark);
 }
 
+/* قاعدة h1-h6 العامة تفرض لون كتابة داكن (لتباين واضح على خلفيات فاتحة)؛
+   هذه اللوحة خلفيتها داكنة، فلازم نصّ العنوان يبقى أبيض صراحةً بدل ما يرث
+   اللون الداكن العام */
+.auth-brand-panel h1,
+.auth-brand-panel h2,
+.auth-brand-panel h3,
+.auth-brand-panel h4 {
+  color: #fff;
+}
+
 .auth-brand-panel::before {
   content: "";
   position: absolute;
