@@ -87,3 +87,25 @@ if (!function_exists('site_get_system_logo')) {
         }
     }
 }
+
+if (!function_exists('site_get_platform_name')) {
+    /**
+     * اسم المنصة (إن ضبطه السوبر أدمن) بنفس استقلالية site_get_system_logo
+     * عن طبقة includes/bootstrap.php؛ يرجع للاسم الافتراضي APP_NAME عند
+     * عدم الضبط أو تعذّر الاتصال بقاعدة البيانات.
+     */
+    function site_get_platform_name(): string
+    {
+        try {
+            $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, (int) DB_PORT);
+            $conn->set_charset('utf8mb4');
+            $result = $conn->query("SELECT setting_value FROM system_settings WHERE setting_key = 'platform_name' LIMIT 1");
+            $row = $result ? $result->fetch_assoc() : null;
+            $conn->close();
+            $name = $row['setting_value'] ?? null;
+            return $name !== null && $name !== '' ? $name : APP_NAME;
+        } catch (Throwable $e) {
+            return APP_NAME;
+        }
+    }
+}

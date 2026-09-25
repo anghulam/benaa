@@ -4,11 +4,11 @@
             <div class="col-lg-4">
                 <div class="site-brand mb-3">
                     <?php if (!empty($siteLogo)): ?>
-                        <img src="<?= BASE_URL ?>/uploads/<?= e($siteLogo) ?>" class="brand-logo-img" alt="<?= e(APP_NAME) ?>">
+                        <img src="<?= BASE_URL ?>/uploads/<?= e($siteLogo) ?>" class="brand-logo-img" alt="<?= e($platformName) ?>">
                     <?php else: ?>
                         <span class="badge-mark">ب</span>
                     <?php endif; ?>
-                    <span><?= e(APP_NAME) ?></span>
+                    <span><?= e($platformName) ?></span>
                 </div>
                 <p class="text-white-50 small" style="max-width:320px;">
                     منصة SaaS متكاملة لإدارة شركات المقاولات والإنشاءات — المشاريع، العقود، الفواتير، الموظفون،
@@ -42,7 +42,7 @@
         </div>
         <hr class="border-secondary my-4">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 text-white-50 small">
-            <span>&copy; <?= date('Y') ?> <?= e(APP_NAME) ?> — جميع الحقوق محفوظة</span>
+            <span>&copy; <?= date('Y') ?> <?= e($platformName) ?> — جميع الحقوق محفوظة</span>
             <span>صُمم خصيصاً لشركات المقاولات والإنشاءات</span>
         </div>
     </div>

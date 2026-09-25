@@ -52,6 +52,14 @@ function setSystemSetting(string $key, ?string $value): void
     );
 }
 
+/** اسم المنصة المعروض في كل الواجهات؛ يعتمد على ما ضبطه السوبر أدمن من
+ * إعدادات النظام، ويرجع للاسم الافتراضي (APP_NAME) إن لم يُضبط بعد */
+function appName(): string
+{
+    $name = getSystemSetting('platform_name');
+    return $name !== null && $name !== '' ? $name : APP_NAME;
+}
+
 /** تنقية سلسلة نصية وإزالة الفراغات الزائدة */
 function clean(?string $value): string
 {

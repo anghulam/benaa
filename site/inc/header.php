@@ -6,7 +6,8 @@
 require_once __DIR__ . '/../../config/config.php';
 require_once __DIR__ . '/functions.php';
 
-$pageTitle = $pageTitle ?? APP_NAME;
+$platformName = site_get_platform_name();
+$pageTitle = $pageTitle ?? $platformName;
 $pageDescription = $pageDescription ?? 'منصة SaaS متكاملة لإدارة شركات المقاولات: المشاريع، العقود، الفواتير، الموظفون، المخزون، والصلاحيات المخصصة — كل ذلك في مكان واحد.';
 $activeNav = $activeNav ?? '';
 $siteLogo = site_get_system_logo();
@@ -24,7 +25,7 @@ $navLinks = [
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title><?= e($pageTitle) ?> | <?= e(APP_NAME) ?></title>
+<title><?= e($pageTitle) ?> | <?= e($platformName) ?></title>
 <meta name="description" content="<?= e($pageDescription) ?>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -40,11 +41,11 @@ $navLinks = [
         <nav class="navbar navbar-expand-lg">
             <a class="navbar-brand site-brand" href="<?= BASE_URL ?>/index.php">
                 <?php if ($siteLogo): ?>
-                    <img src="<?= BASE_URL ?>/uploads/<?= e($siteLogo) ?>" class="brand-logo-img" alt="<?= e(APP_NAME) ?>">
+                    <img src="<?= BASE_URL ?>/uploads/<?= e($siteLogo) ?>" class="brand-logo-img" alt="<?= e($platformName) ?>">
                 <?php else: ?>
                     <span class="badge-mark">ب</span>
                 <?php endif; ?>
-                <span><?= e(APP_NAME) ?></span>
+                <span><?= e($platformName) ?></span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#siteNav" aria-controls="siteNav">
                 <i class="bi bi-list fs-3"></i>
@@ -53,11 +54,11 @@ $navLinks = [
                 <div class="offcanvas-header d-lg-none">
                     <span class="site-brand">
                         <?php if ($siteLogo): ?>
-                            <img src="<?= BASE_URL ?>/uploads/<?= e($siteLogo) ?>" class="brand-logo-img" alt="<?= e(APP_NAME) ?>">
+                            <img src="<?= BASE_URL ?>/uploads/<?= e($siteLogo) ?>" class="brand-logo-img" alt="<?= e($platformName) ?>">
                         <?php else: ?>
                             <span class="badge-mark">ب</span>
                         <?php endif; ?>
-                        <span><?= e(APP_NAME) ?></span>
+                        <span><?= e($platformName) ?></span>
                     </span>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="إغلاق"></button>
                 </div>

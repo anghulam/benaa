@@ -8,7 +8,7 @@
  * أو $sb) ويُفسد قيمته بعد انتهاء require. لذلك نستخدم بادئة __hdr لجميع المتغيرات
  * الداخلية الخاصة بهذا الملف فقط.
  */
-$pageTitle = $pageTitle ?? APP_NAME;
+$pageTitle = $pageTitle ?? appName();
 $pageSubtitle = $pageSubtitle ?? '';
 $__hdrUser = currentUser();
 $__hdrCompany = currentCompany();
@@ -18,7 +18,7 @@ $__hdrCompany = currentCompany();
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title><?= e($pageTitle) ?> | <?= e(APP_NAME) ?></title>
+<title><?= e($pageTitle) ?> | <?= e(appName()) ?></title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="<?= BASE_URL ?>/assets/vendor/bootstrap/bootstrap.rtl.min.css" rel="stylesheet">

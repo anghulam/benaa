@@ -17,6 +17,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         redirect('/superadmin/settings.php');
     }
 
+    if ($form === 'platform_name') {
+        $platformName = clean(post('platform_name'));
+        if ($platformName === '') {
+            $errors[] = 'الرجاء إدخال اسم المنصة';
+        } else {
+            setSystemSetting('platform_name', $platformName);
+            flash('success', 'تم حفظ اسم المنصة بنجاح');
+            redirect('/superadmin/settings.php');
+        }
+    }
+
     if ($form === 'google') {
         $googleClientId = post('google_client_id');
         $googleClientSecret = post('google_client_secret');
@@ -28,17 +39,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $currentLogo = getSystemSetting('system_logo');
+$currentPlatformName = appName();
 $googleClientId = getSystemSetting('google_client_id', '');
 $googleClientSecret = getSystemSetting('google_client_secret', '');
 $redirectUri = (!empty($_SERVER['HTTPS']) ? 'https://' : 'http://') . ($_SERVER['HTTP_HOST'] ?? 'your-domain.com') . BASE_URL . '/modules/settings/google_callback.php';
 
 $pageTitle = 'إعدادات النظام';
-$pageSubtitle = 'إعدادات عامة على مستوى المنصة بأكملها (شعار النظام، ربط Google Drive)';
+$pageSubtitle = 'إعدادات عامة على مستوى المنصة بأكملها (اسم المنصة، شعار النظام، ربط Google Drive)';
 $activeModule = 'superadmin-settings';
 require __DIR__ . '/../includes/header.php';
 ?>
 
 <div class="row g-3">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">اسم المنصة</div>
+            <div class="card-body section-card">
+                <?php foreach ($errors as $err): ?><div class="alert alert-danger"><?= e($err) ?></div><?php endforeach; ?>
+                <form method="post">
+                    <?= csrfField() ?>
+                    <input type="hidden" name="form" value="platform_name">
+                    <div class="mb-3">
+                        <label class="form-label">اسم المنصة</label>
+                        <input type="text" name="platform_name" class="form-control" value="<?= e($currentPlatformName) ?>" required>
+                        <div class="form-text">يظهر هذا الاسم في عنوان الصفحات، الشريط الجانبي، الموقع التسويقي، وصفحات الدخول/التسجيل في كل مكان.</div>
+                    </div>
+                    <button class="btn btn-brand"><i class="bi bi-check-lg"></i> حفظ</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="col-lg-6">
         <div class="card">
             <div class="card-header">شعار النظام</div>
