@@ -40,10 +40,15 @@ $__sbMenuGroups = [
     ],
 ];
 ?>
+<?php $__sbLogo = getSystemSetting('system_logo'); ?>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <aside class="sidebar" id="appSidebar">
     <div class="sidebar-brand">
-        <span class="badge-mark">ب</span>
+        <?php if ($__sbLogo): ?>
+            <img src="<?= BASE_URL ?>/uploads/<?= e($__sbLogo) ?>" class="brand-logo-img" alt="<?= e(APP_NAME) ?>">
+        <?php else: ?>
+            <span class="badge-mark">ب</span>
+        <?php endif; ?>
         <span><?= e(APP_NAME) ?></span>
     </div>
 
@@ -51,8 +56,10 @@ $__sbMenuGroups = [
         $__sbSuperAdminItems = [
             ['key' => 'superadmin-companies', 'label' => 'الشركات المشتركة', 'icon' => 'bi-building-gear', 'href' => '/superadmin/index.php'],
             ['key' => 'superadmin-plans', 'label' => 'خطط الاشتراك', 'icon' => 'bi-tags', 'href' => '/superadmin/plans.php'],
+            ['key' => 'superadmin-messages', 'label' => 'رسائل التواصل', 'icon' => 'bi-envelope', 'href' => '/superadmin/messages.php'],
             ['key' => 'superadmin-activity', 'label' => 'سجل النشاطات', 'icon' => 'bi-clock-history', 'href' => '/superadmin/activity.php'],
             ['key' => 'superadmin-admins', 'label' => 'حسابات المشرفين', 'icon' => 'bi-person-lock', 'href' => '/superadmin/admins.php'],
+            ['key' => 'superadmin-settings', 'label' => 'إعدادات النظام', 'icon' => 'bi-gear-wide-connected', 'href' => '/superadmin/settings.php'],
             ['key' => 'superadmin-profile', 'label' => 'الملف الشخصي', 'icon' => 'bi-person-circle', 'href' => '/superadmin/profile.php'],
         ];
     ?>
@@ -82,4 +89,4 @@ $__sbMenuGroups = [
         </nav>
     <?php endforeach; endif; ?>
 </aside>
-<?php unset($__sbMenuGroups, $__sbGroupTitle, $__sbGroupItems, $__sbVisibleItems, $__sbItem, $__sbSuperAdminItems, $__sbSaItem); ?>
+<?php unset($__sbMenuGroups, $__sbGroupTitle, $__sbGroupItems, $__sbVisibleItems, $__sbItem, $__sbSuperAdminItems, $__sbSaItem, $__sbLogo); ?>

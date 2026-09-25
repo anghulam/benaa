@@ -159,6 +159,14 @@ a { text-decoration: none; }
   font-weight: 800;
 }
 
+.brand-logo-img {
+  height: 38px;
+  max-width: 140px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
 .sidebar-section-title {
   font-size: 11px;
   text-transform: uppercase;
@@ -393,6 +401,7 @@ footer.app-footer {
 @media print {
   .no-print { display: none !important; }
   .print-only { display: block; }
+  .sidebar { display: none !important; }
   .page-body { padding: 0; }
   body { background: #fff; }
 }
