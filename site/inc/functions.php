@@ -109,3 +109,29 @@ if (!function_exists('site_get_platform_name')) {
         }
     }
 }
+
+if (!function_exists('site_get_setting')) {
+    /**
+     * إعداد عام واحد من system_settings (بنفس استقلالية دوال الشعار واسم
+     * المنصة أعلاه)، يُستخدم لبيانات التواصل ونبذة التذييل القابلة للتعديل
+     * من إعدادات السوبر أدمن. يرجع للقيمة الافتراضية المُمرَّرة عند عدم
+     * الضبط أو تعذّر الاتصال بقاعدة البيانات.
+     */
+    function site_get_setting(string $key, string $default = ''): string
+    {
+        try {
+            $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, (int) DB_PORT);
+            $conn->set_charset('utf8mb4');
+            $stmt = $conn->prepare('SELECT setting_value FROM system_settings WHERE setting_key = ? LIMIT 1');
+            $stmt->bind_param('s', $key);
+            $stmt->execute();
+            $row = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+            $conn->close();
+            $value = $row['setting_value'] ?? null;
+            return $value !== null && $value !== '' ? $value : $default;
+        } catch (Throwable $e) {
+            return $default;
+        }
+    }
+}

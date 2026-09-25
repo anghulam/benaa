@@ -36,10 +36,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         flash('success', 'تم حفظ إعدادات Google بنجاح');
         redirect('/superadmin/settings.php');
     }
+
+    if ($form === 'footer') {
+        setSystemSetting('contact_email', clean(post('contact_email')));
+        setSystemSetting('contact_phone', clean(post('contact_phone')));
+        setSystemSetting('footer_description', trim(post('footer_description')));
+        flash('success', 'تم حفظ بيانات التذييل والتواصل بنجاح');
+        redirect('/superadmin/settings.php');
+    }
 }
 
 $currentLogo = getSystemSetting('system_logo');
 $currentPlatformName = appName();
+$currentContactEmail = getSystemSetting('contact_email', 'info@example.com');
+$currentContactPhone = getSystemSetting('contact_phone', '966+ 5XXXXXXXX');
+$currentFooterDescription = getSystemSetting('footer_description', 'منصة SaaS متكاملة لإدارة شركات المقاولات والإنشاءات — المشاريع، العقود، الفواتير، الموظفون، المخزون، والصلاحيات المخصصة، بواجهة عربية احترافية بالكامل.');
 $googleClientId = getSystemSetting('google_client_id', '');
 $googleClientSecret = getSystemSetting('google_client_secret', '');
 $redirectUri = (!empty($_SERVER['HTTPS']) ? 'https://' : 'http://') . ($_SERVER['HTTP_HOST'] ?? 'your-domain.com') . BASE_URL . '/modules/settings/google_callback.php';
@@ -84,6 +95,32 @@ require __DIR__ . '/../includes/header.php';
                         <label class="form-label">رفع شعار جديد</label>
                         <input type="file" name="system_logo" class="form-control" accept="image/*">
                         <div class="form-text">يظهر هذا الشعار في الموقع التسويقي وشريط التنقل بدلاً من الشعار الافتراضي "ب". اتركوا الحقل فارغاً للإبقاء على الشعار الحالي.</div>
+                    </div>
+                    <button class="btn btn-brand"><i class="bi bi-check-lg"></i> حفظ</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">بيانات التواصل والتذييل (الموقع التسويقي)</div>
+            <div class="card-body section-card">
+                <form method="post">
+                    <?= csrfField() ?>
+                    <input type="hidden" name="form" value="footer">
+                    <div class="mb-3">
+                        <label class="form-label">البريد الإلكتروني للتواصل</label>
+                        <input type="email" name="contact_email" class="form-control" value="<?= e($currentContactEmail) ?>" dir="ltr">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">رقم الجوال للتواصل</label>
+                        <input type="text" name="contact_phone" class="form-control" value="<?= e($currentContactPhone) ?>" dir="ltr">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">نبذة عن المنصة في تذييل الموقع</label>
+                        <textarea name="footer_description" class="form-control" rows="3"><?= e($currentFooterDescription) ?></textarea>
+                        <div class="form-text">تظهر هذه البيانات في تذييل كل صفحات الموقع التسويقي، وفي صفحة "تواصل معنا".</div>
                     </div>
                     <button class="btn btn-brand"><i class="bi bi-check-lg"></i> حفظ</button>
                 </form>

@@ -11,8 +11,7 @@
                     <span><?= e($platformName) ?></span>
                 </div>
                 <p class="text-white-50 small" style="max-width:320px;">
-                    منصة SaaS متكاملة لإدارة شركات المقاولات والإنشاءات — المشاريع، العقود، الفواتير، الموظفون،
-                    المخزون، والصلاحيات المخصصة، بواجهة عربية احترافية بالكامل.
+                    <?= e(site_get_setting('footer_description', 'منصة SaaS متكاملة لإدارة شركات المقاولات والإنشاءات — المشاريع، العقود، الفواتير، الموظفون، المخزون، والصلاحيات المخصصة، بواجهة عربية احترافية بالكامل.')) ?>
                 </p>
             </div>
             <div class="col-lg-2 col-6">
@@ -35,8 +34,8 @@
             <div class="col-lg-3">
                 <h6 class="text-white fw-bold mb-3">تواصل معنا</h6>
                 <ul class="list-unstyled site-footer-links">
-                    <li><i class="bi bi-envelope me-1"></i> info@example.com</li>
-                    <li><i class="bi bi-telephone me-1"></i> 966+ 5XXXXXXXX</li>
+                    <li><i class="bi bi-envelope me-1"></i> <?= e(site_get_setting('contact_email', 'info@example.com')) ?></li>
+                    <li><i class="bi bi-telephone me-1"></i> <?= e(site_get_setting('contact_phone', '966+ 5XXXXXXXX')) ?></li>
                 </ul>
             </div>
         </div>
