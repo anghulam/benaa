@@ -63,8 +63,8 @@ require __DIR__ . '/site/inc/header.php';
             <div class="col-lg-5">
                 <h3 class="fw-bold mb-4">بيانات التواصل</h3>
                 <ul class="icon-check-list mb-4">
-                    <li><i class="bi bi-envelope"></i> info@example.com</li>
-                    <li><i class="bi bi-telephone"></i> 966+ 5XXXXXXXX</li>
+                    <li><i class="bi bi-envelope"></i> <?= e(site_get_setting('contact_email', 'info@example.com')) ?></li>
+                    <li><i class="bi bi-telephone"></i> <?= e(site_get_setting('contact_phone', '966+ 5XXXXXXXX')) ?></li>
                     <li><i class="bi bi-clock"></i> الأحد - الخميس، 9 صباحاً - 5 مساءً</li>
                 </ul>
                 <div class="feature-card feature-card--inline">
