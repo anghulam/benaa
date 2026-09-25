@@ -21,9 +21,13 @@
 
 /* تُضاف هذه الفئة عبر جافاسكريبت (assets/js/site.js) عند تمرير الصفحة، لتمييز
    الشريط بصرياً عن حالته الأولى فوق قسم Hero */
+/* بلا backdrop-filter عمداً: أي خاصية filter/backdrop-filter على عنصر
+   تُنشئ containing block جديد لأي عنصر ابن position:fixed (مثل القائمة
+   المنسدلة للموبايل .site-offcanvas)، فيصير مرجع تثبيتها صندوق الشريط
+   المحدود بدل نافذة العرض الكاملة. الخلفية معتمة بما يكفي (92%) فلا حاجة
+   فعلية للضبابية أصلاً */
 .site-navbar.is-scrolled {
-  background: rgba(10, 14, 23, 0.92);
-  backdrop-filter: blur(10px);
+  background: rgba(10, 14, 23, 0.96);
   box-shadow: 0 4px 18px rgba(15, 23, 42, 0.25);
   padding: 10px 0;
 }
@@ -48,6 +52,48 @@
 .site-navbar.is-scrolled .btn-outline-navy:hover {
   background: #fff;
   color: var(--bn-navy-dark);
+}
+
+.navbar-toggler {
+  border: none;
+  padding: 4px 8px;
+}
+
+.navbar-toggler:focus { box-shadow: none; }
+
+.navbar-toggler i { color: var(--bn-ink); transition: color .2s ease; }
+
+.site-navbar.is-scrolled .navbar-toggler i { color: #fff; }
+
+/* ---------------------------- قائمة الموبايل (Offcanvas) ---------------------------- */
+/* .offcanvas-lg من Bootstrap: قائمة منزلقة من الجانب على الشاشات الصغيرة،
+   وتتحول لعنصر عادي داخل الشريط عند lg فأعلى (بلا خلفية أو موضع ثابت) */
+/* Bootstrap يحدد عرض الـoffcanvas عبر متغير CSS خاص به (--bs-offcanvas-width)
+   ويستخدمه في قاعدة أعلى تخصيصاً من width عادي، فلازم تجاوزه عبر نفس المتغير */
+.site-offcanvas { --bs-offcanvas-width: 280px; }
+
+@media (max-width: 991.98px) {
+  .site-offcanvas {
+    background: var(--bn-navy-dark);
+    color: #fff;
+  }
+
+  .site-offcanvas .offcanvas-header {
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .site-offcanvas .site-brand { color: #fff; }
+
+  .site-offcanvas .site-nav-link {
+    color: rgba(255,255,255,0.75) !important;
+    padding: 12px 10px !important;
+  }
+
+  .site-offcanvas .site-nav-link:hover,
+  .site-offcanvas .site-nav-link.active {
+    color: #fff !important;
+    background: rgba(255,255,255,0.08);
+  }
 }
 
 /* ---------------------------- زر العودة لأعلى الصفحة ---------------------------- */
