@@ -133,6 +133,16 @@ h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.02em; font-wei
   box-shadow: var(--bn-shadow-glow);
 }
 
+/* عند رفع شعار مخصص للنظام يُعرض بدل شارة "ب" الافتراضية أعلاه */
+.auth-logo-img {
+  display: block;
+  max-height: 58px;
+  max-width: 220px;
+  width: auto;
+  object-fit: contain;
+  margin-bottom: 24px;
+}
+
 .auth-form-panel {
   background: var(--bn-surface);
   display: flex;
