@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>إنشاء حساب شركة | <?= e(APP_NAME) ?></title>
+<title>إنشاء حساب شركة | <?= e(appName()) ?></title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="<?= BASE_URL ?>/assets/vendor/bootstrap/bootstrap.rtl.min.css" rel="stylesheet">
 <link href="<?= BASE_URL ?>/assets/vendor/bootstrap-icons/bootstrap-icons.min.css" rel="stylesheet">
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="auth-brand-panel w-100">
                 <?php $__authLogo = getSystemSetting('system_logo'); ?>
                 <?php if ($__authLogo): ?>
-                    <img src="<?= BASE_URL ?>/uploads/<?= e($__authLogo) ?>" class="auth-logo-img" alt="<?= e(APP_NAME) ?>">
+                    <img src="<?= BASE_URL ?>/uploads/<?= e($__authLogo) ?>" class="auth-logo-img" alt="<?= e(appName()) ?>">
                 <?php else: ?>
                     <div class="auth-logo">ب</div>
                 <?php endif; ?>

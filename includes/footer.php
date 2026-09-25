@@ -1,7 +1,7 @@
         </main>
 
         <footer class="app-footer no-print">
-            &copy; <?= date('Y') ?> <?= e(APP_NAME) ?> — جميع الحقوق محفوظة | الإصدار <?= e(APP_VERSION) ?>
+            &copy; <?= date('Y') ?> <?= e(appName()) ?> — جميع الحقوق محفوظة | الإصدار <?= e(APP_VERSION) ?>
         </footer>
     </div>
 </div>

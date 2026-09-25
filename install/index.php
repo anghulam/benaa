@@ -184,7 +184,7 @@ $pageTitle = $pageTitle ?? 'تثبيت النظام';
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title><?= e($pageTitle) ?> | <?= e(APP_NAME) ?></title>
+<title><?= e($pageTitle) ?> | <?= e(appName()) ?></title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="<?= BASE_URL ?>/assets/vendor/bootstrap/bootstrap.rtl.min.css" rel="stylesheet">
 <link href="<?= BASE_URL ?>/assets/vendor/bootstrap-icons/bootstrap-icons.min.css" rel="stylesheet">
@@ -198,11 +198,11 @@ $pageTitle = $pageTitle ?? 'تثبيت النظام';
                 <div class="text-center mb-4">
                     <?php $__authLogo = getSystemSetting('system_logo'); ?>
                     <?php if ($__authLogo): ?>
-                        <img src="<?= BASE_URL ?>/uploads/<?= e($__authLogo) ?>" class="auth-logo-img mx-auto" alt="<?= e(APP_NAME) ?>">
+                        <img src="<?= BASE_URL ?>/uploads/<?= e($__authLogo) ?>" class="auth-logo-img mx-auto" alt="<?= e(appName()) ?>">
                     <?php else: ?>
                         <div class="auth-logo mx-auto">ب</div>
                     <?php endif; ?>
-                    <h3 class="fw-bold text-white mt-3 mb-0"><?= e(APP_NAME) ?></h3>
+                    <h3 class="fw-bold text-white mt-3 mb-0"><?= e(appName()) ?></h3>
                     <p class="text-white-50">معالج التثبيت</p>
                 </div>
 

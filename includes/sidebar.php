@@ -45,11 +45,11 @@ $__sbMenuGroups = [
 <aside class="sidebar" id="appSidebar">
     <div class="sidebar-brand">
         <?php if ($__sbLogo): ?>
-            <img src="<?= BASE_URL ?>/uploads/<?= e($__sbLogo) ?>" class="brand-logo-img" alt="<?= e(APP_NAME) ?>">
+            <img src="<?= BASE_URL ?>/uploads/<?= e($__sbLogo) ?>" class="brand-logo-img" alt="<?= e(appName()) ?>">
         <?php else: ?>
             <span class="badge-mark">ب</span>
         <?php endif; ?>
-        <span><?= e(APP_NAME) ?></span>
+        <span><?= e(appName()) ?></span>
     </div>
 
     <?php if (isSuperAdmin()):
