@@ -465,6 +465,43 @@
 }
 .pricing-card ul li i { color: var(--bn-success); margin-top: 2px; }
 
+/* ---------------------------- جدول مقارنة الباقات ---------------------------- */
+.pricing-compare table {
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--bn-surface);
+  border-radius: var(--bn-card-radius);
+  overflow: hidden;
+  box-shadow: var(--bn-shadow);
+}
+
+.pricing-compare th,
+.pricing-compare td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--bn-border);
+  vertical-align: middle;
+}
+
+.pricing-compare tbody tr:last-child th,
+.pricing-compare tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.pricing-compare thead th {
+  background: var(--bn-bg);
+  font-weight: 700;
+  color: var(--bn-ink);
+  white-space: nowrap;
+}
+
+.pricing-compare th.is-featured,
+.pricing-compare td.is-featured {
+  background: var(--bn-primary-light);
+}
+
+.pricing-compare td .bi-check-circle-fill { color: var(--bn-success); font-size: 15px; }
+.pricing-compare td span.small { color: var(--bn-ink-soft); }
+
 /* ---------------------------- شريط دعوة للعمل (CTA) ---------------------------- */
 .cta-banner {
   background: var(--bn-navy-dark);

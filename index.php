@@ -176,6 +176,7 @@ require __DIR__ . '/site/inc/header.php';
             <?php if ($homeTrialPlan): ?>
                 <div class="col-lg-3 col-md-6">
                     <div class="pricing-card text-center">
+                        <div class="feature-icon bg-soft-teal mx-auto"><i class="bi bi-gift"></i></div>
                         <h6 class="text-muted fw-bold mb-2"><?= e($homeTrialPlan['name']) ?></h6>
                         <div class="price">مجاناً</div>
                         <p class="text-muted small mt-2"><?= e($homeTrialPlan['desc']) ?></p>
@@ -186,6 +187,7 @@ require __DIR__ . '/site/inc/header.php';
                 <div class="col-lg-3 col-md-6">
                     <div class="pricing-card featured text-center">
                         <span class="featured-badge">الأكثر طلباً</span>
+                        <div class="feature-icon bg-soft-navy mx-auto"><i class="bi bi-star-fill"></i></div>
                         <h6 class="text-muted fw-bold mb-2"><?= e($homeFeaturedPlan['name']) ?></h6>
                         <div class="price">
                             <?= $homeFeaturedPlan['price'] === '0' ? 'مجاناً' : e($homeFeaturedPlan['price']) ?>
