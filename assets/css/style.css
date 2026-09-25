@@ -26,7 +26,7 @@ body {
   font-family: 'Cairo', 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
   background: var(--bn-bg);
   color: #1f2937;
-  font-size: 14.5px;
+  font-size: 13.5px;
 }
 
 a { text-decoration: none; }
@@ -143,7 +143,7 @@ a { text-decoration: none; }
   border-bottom: 1px solid rgba(255,255,255,0.08);
   color: #fff;
   font-weight: 800;
-  font-size: 18px;
+  font-size: 16.5px;
 }
 
 .sidebar-brand .badge-mark {
@@ -244,7 +244,7 @@ a { text-decoration: none; }
 }
 
 .page-title {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 800;
   color: #0f172a;
   margin: 0;
@@ -252,7 +252,7 @@ a { text-decoration: none; }
 
 .page-subtitle {
   color: #64748b;
-  font-size: 13.5px;
+  font-size: 12.5px;
   margin-top: 2px;
 }
 
@@ -286,7 +286,7 @@ a { text-decoration: none; }
 }
 
 .stat-value {
-  font-size: 24px;
+  font-size: 21px;
   font-weight: 800;
   color: #0f172a;
   line-height: 1.2;
@@ -294,7 +294,7 @@ a { text-decoration: none; }
 
 .stat-label {
   color: #64748b;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
 }
 
