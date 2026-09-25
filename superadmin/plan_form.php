@@ -52,17 +52,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'ssdiiiisii',
                 [$data['name'], $data['slug'], (float) $data['price'], (int) $data['duration_days'], (int) $data['max_users'], (int) $data['max_projects'], (int) $data['max_storage_mb'], $data['features'], $isActive, $id]
             );
+            $planId = $id;
             flash('success', 'تم تحديث الباقة بنجاح');
         } else {
+            $conn = db();
             dbExecute(
                 'INSERT INTO subscription_plans (name, slug, price, duration_days, max_users, max_projects, max_storage_mb, features, is_active) VALUES (?,?,?,?,?,?,?,?,?)',
                 'ssdiiiisi',
                 [$data['name'], $data['slug'], (float) $data['price'], (int) $data['duration_days'], (int) $data['max_users'], (int) $data['max_projects'], (int) $data['max_storage_mb'], $data['features'], $isActive]
             );
+            $planId = $conn->insert_id;
             flash('success', 'تمت إضافة الباقة بنجاح');
         }
+
+        dbExecute('DELETE FROM plan_modules WHERE plan_id = ?', 'i', [$planId]);
+        foreach (array_keys(permissionModulesList()) as $moduleKey) {
+            $enabled = isset($_POST['module'][$moduleKey]) ? 1 : 0;
+            dbExecute(
+                'INSERT INTO plan_modules (plan_id, module_key, enabled) VALUES (?,?,?)',
+                'isi',
+                [$planId, $moduleKey, $enabled]
+            );
+        }
+
         redirect('/superadmin/plans.php');
     }
+}
+
+// الوحدات المفعّلة حالياً لهذه الباقة لعرضها كنقطة انطلاق في النموذج؛
+// باقة غير مخصَّصة بعد (أو باقة جديدة) تُعرَض بكل الوحدات مفعّلة افتراضياً
+$effectiveModules = $id ? planModules($id) : null;
+if ($effectiveModules === null) {
+    $effectiveModules = array_fill_keys(array_keys(permissionModulesList()), true);
 }
 
 $pageTitle = $plan ? 'تعديل باقة اشتراك' : 'باقة اشتراك جديدة';
@@ -118,7 +139,27 @@ require __DIR__ . '/../includes/header.php';
                             </select>
                         </div>
                     </div>
-                    <div class="d-flex gap-2">
+
+                    <hr class="my-4">
+                    <h6 class="fw-bold mb-1">الوحدات المتاحة في هذه الباقة</h6>
+                    <p class="text-muted small mb-3">
+                        حدّدوا الوحدات التي تستطيع الشركات المشتركة في هذه الباقة الوصول إليها. الوحدة غير المفعّلة هنا
+                        تختفي عن كل مستخدمي الشركة (حتى مالك الشركة) بغض النظر عن صلاحياتهم الداخلية.
+                    </p>
+                    <div class="row">
+                        <?php foreach (permissionModulesList() as $moduleKey => $moduleLabel): ?>
+                            <div class="col-md-4 col-6 mb-2">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="module_<?= e($moduleKey) ?>"
+                                           name="module[<?= e($moduleKey) ?>]"
+                                           <?= !empty($effectiveModules[$moduleKey]) ? 'checked' : '' ?>>
+                                    <label class="form-check-label" for="module_<?= e($moduleKey) ?>"><?= e($moduleLabel) ?></label>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <div class="d-flex gap-2 mt-3">
                         <button class="btn btn-brand"><i class="bi bi-check-lg"></i> حفظ</button>
                         <a href="<?= BASE_URL ?>/superadmin/plans.php" class="btn btn-light">إلغاء</a>
                     </div>
