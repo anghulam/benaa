@@ -119,7 +119,7 @@ new Chart(document.getElementById("expenseChart"), {
     type: "bar",
     data: {
         labels: ' . json_encode($categoryLabels, JSON_UNESCAPED_UNICODE) . ',
-        datasets: [{ label: "المصروفات", data: ' . json_encode($categoryTotals) . ', backgroundColor: "#f5a623", borderRadius: 6 }]
+        datasets: [{ label: "المصروفات", data: ' . json_encode($categoryTotals) . ', backgroundColor: "#d97706", borderRadius: 6 }]
     },
     options: {
         responsive: true,

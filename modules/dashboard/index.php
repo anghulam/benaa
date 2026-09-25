@@ -224,7 +224,7 @@ new Chart(document.getElementById("financeChart"), {
         labels: ' . json_encode($chartLabels, JSON_UNESCAPED_UNICODE) . ',
         datasets: [
             { label: "التحصيلات", data: ' . json_encode($chartRevenue) . ', borderColor: "#0ea5a3", backgroundColor: "rgba(14,165,163,0.12)", tension: 0.35, fill: true },
-            { label: "المصروفات", data: ' . json_encode($chartExpenses) . ', borderColor: "#f5a623", backgroundColor: "rgba(245,166,35,0.12)", tension: 0.35, fill: true }
+            { label: "المصروفات", data: ' . json_encode($chartExpenses) . ', borderColor: "#d97706", backgroundColor: "rgba(217,119,6,0.12)", tension: 0.35, fill: true }
         ]
     },
     options: {

@@ -56,9 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     14 يوماً مجاناً بدون بطاقة ائتمانية، لإدارة مشاريعك ومحاسبة شركتك بكل احترافية.
                 </p>
                 <ul class="list-unstyled text-white-50">
-                    <li class="mb-2"><i class="bi bi-shield-check text-warning me-2"></i> بياناتك معزولة وآمنة بالكامل</li>
-                    <li class="mb-2"><i class="bi bi-lightning-charge text-warning me-2"></i> إعداد فوري خلال دقيقة</li>
-                    <li class="mb-2"><i class="bi bi-headset text-warning me-2"></i> دعم فني متواصل</li>
+                    <li class="mb-2"><i class="bi bi-shield-check me-2" style="color: var(--bn-accent-tint);"></i> بياناتك معزولة وآمنة بالكامل</li>
+                    <li class="mb-2"><i class="bi bi-lightning-charge me-2" style="color: var(--bn-accent-tint);"></i> إعداد فوري خلال دقيقة</li>
+                    <li class="mb-2"><i class="bi bi-headset me-2" style="color: var(--bn-accent-tint);"></i> دعم فني متواصل</li>
                 </ul>
             </div>
         </div>

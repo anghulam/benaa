@@ -225,7 +225,7 @@ $pageTitle = $pageTitle ?? 'تثبيت النظام';
                                 <div class="text-center flex-fill">
                                     <div class="mx-auto d-flex align-items-center justify-content-center rounded-circle mb-1"
                                          style="width:32px;height:32px;font-weight:700;font-size:13px;
-                                         background: <?= $state === 'pending' ? '#e2e8f0' : ($state === 'active' ? '#f5a623' : '#16a34a') ?>;
+                                         background: <?= $state === 'pending' ? '#e2e8f0' : ($state === 'active' ? '#4f46e5' : '#16a34a') ?>;
                                          color: <?= $state === 'pending' ? '#64748b' : '#fff' ?>;">
                                         <?= $state === 'done' ? '<i class="bi bi-check-lg"></i>' : $n ?>
                                     </div>

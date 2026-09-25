@@ -24,7 +24,7 @@ require __DIR__ . '/../includes/header.php';
                         <span class="badge bg-<?= $p['is_active'] ? 'success' : 'secondary' ?>"><?= $p['is_active'] ? 'مفعّلة' : 'معطّلة' ?></span>
                     </div>
                     <div class="mb-3">
-                        <span class="fs-3 fw-bold text-warning"><?= formatMoney((float) $p['price']) ?></span>
+                        <span class="fs-3 fw-bold" style="color: var(--bn-primary);"><?= formatMoney((float) $p['price']) ?></span>
                         <span class="text-muted small">/ <?= (int) $p['duration_days'] ?> يوم</span>
                     </div>
                     <ul class="list-unstyled small text-muted flex-grow-1">
