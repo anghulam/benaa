@@ -69,7 +69,7 @@ $navLinks = [
                             </li>
                         <?php endforeach; ?>
                     </ul>
-                    <div class="d-flex gap-2 mt-4 mt-lg-0">
+                    <div class="d-grid d-lg-flex gap-2 mt-4 mt-lg-0 site-nav-auth-btns">
                         <a href="<?= BASE_URL ?>/modules/auth/login.php" class="btn btn-outline-navy">تسجيل الدخول</a>
                         <a href="<?= BASE_URL ?>/modules/auth/register.php" class="btn btn-brand">ابدأ تجربتك المجانية</a>
                     </div>
