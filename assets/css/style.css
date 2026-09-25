@@ -1,19 +1,47 @@
 /* =====================================================================
    نظام بناء - Benaa Construction Management SaaS
-   تصميم احترافي عصري - Bootstrap 5 RTL
+   هوية بصرية جديدة: نيلي احترافي عصري (Indigo Professional)
+   Bootstrap 5 RTL
    ===================================================================== */
 
 :root {
-  --bn-navy: #0f2138;
-  --bn-navy-dark: #0a1826;
-  --bn-navy-light: #16304f;
-  --bn-amber: #f5a623;
-  --bn-amber-dark: #d98e0f;
-  --bn-teal: #0ea5a3;
-  --bn-bg: #f4f6f9;
-  --bn-card-radius: 14px;
-  --bn-shadow: 0 4px 18px rgba(15, 33, 56, 0.06);
-  --bn-shadow-lg: 0 10px 30px rgba(15, 33, 56, 0.12);
+  /* الهوية الأساسية */
+  --bn-primary: #4f46e5;
+  --bn-primary-dark: #4338ca;
+  --bn-primary-darker: #312e81;
+  --bn-primary-light: #eef2ff;
+  --bn-primary-tint: #a5b4fc;
+  --bn-accent: #0d9488;
+  --bn-accent-tint: #5eead4;
+
+  /* أسماء متوافقة مع الكود القديم (تُستخدم عبر الملف وملف الموقع
+     التسويقي) - أُعيد ربطها بالهوية الجديدة بدل حذفها لتفادي إعادة
+     كتابة كل استدعاء على حدة */
+  --bn-navy: var(--bn-primary);
+  --bn-navy-dark: #0f172a;
+  --bn-navy-light: #6366f1;
+  --bn-amber: var(--bn-primary);
+  --bn-amber-dark: var(--bn-primary-dark);
+  --bn-teal: var(--bn-accent);
+
+  /* محايدات */
+  --bn-ink: #0f172a;
+  --bn-ink-soft: #334155;
+  --bn-muted: #64748b;
+  --bn-border: #e5e7f0;
+  --bn-bg: #f7f8fc;
+  --bn-surface: #ffffff;
+
+  /* دلالية */
+  --bn-success: #059669;
+  --bn-warning: #d97706;
+  --bn-danger: #dc2626;
+  --bn-info: #0284c7;
+
+  --bn-card-radius: 12px;
+  --bn-radius-lg: 16px;
+  --bn-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 6px 20px rgba(15, 23, 42, 0.05);
+  --bn-shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.12);
 }
 
 * { box-sizing: border-box; }
@@ -23,10 +51,7 @@ html, body {
 }
 
 /* حجم خط الجذر يتحكم بكل عناصر Bootstrap المبنية على وحدة rem (الأزرار،
-   الشارات، العناوين h1-h6 الافتراضية، حقول الإدخال، المسافات...)، وهو
-   منفصل تماماً عن font-size الموروث في body؛ تصغيره هنا هو ما يصغّر
-   "الإطار العام" لبوتستراب فعلياً في كل الصفحات (التطبيق والموقع
-   التسويقي معاً، فكلاهما يحمّل هذا الملف) */
+   الشارات، العناوين h1-h6 الافتراضية، حقول الإدخال، المسافات...) */
 html {
   font-size: 14px;
 }
@@ -34,18 +59,21 @@ html {
 body {
   font-family: 'Cairo', 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
   background: var(--bn-bg);
-  color: #1f2937;
+  color: var(--bn-ink-soft);
   font-size: 12.5px;
+  -webkit-font-smoothing: antialiased;
 }
 
 a { text-decoration: none; }
+
+h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.01em; }
 
 /* ---------------------------- شاشات الدخول ---------------------------- */
 .auth-page {
   min-height: 100vh;
   display: flex;
   align-items: stretch;
-  background: linear-gradient(135deg, var(--bn-navy) 0%, var(--bn-navy-dark) 100%);
+  background: linear-gradient(160deg, var(--bn-primary-darker) 0%, var(--bn-navy-dark) 100%);
 }
 
 .auth-brand-panel {
@@ -62,8 +90,8 @@ a { text-decoration: none; }
   content: "";
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle at 20% 20%, rgba(245,166,35,0.18) 0%, transparent 45%),
-                     radial-gradient(circle at 80% 80%, rgba(14,165,163,0.18) 0%, transparent 45%);
+  background-image: radial-gradient(circle at 15% 15%, rgba(99,102,241,0.35) 0%, transparent 45%),
+                     radial-gradient(circle at 85% 85%, rgba(13,148,136,0.22) 0%, transparent 45%);
 }
 
 .auth-brand-panel > * { position: relative; z-index: 1; }
@@ -71,19 +99,20 @@ a { text-decoration: none; }
 .auth-logo {
   width: 56px;
   height: 56px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, var(--bn-amber), var(--bn-amber-dark));
+  border-radius: var(--bn-card-radius);
+  background: var(--bn-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 28px;
-  color: #16304f;
+  color: #fff;
   font-weight: 800;
   margin-bottom: 24px;
+  box-shadow: 0 8px 24px rgba(79, 70, 229, 0.35);
 }
 
 .auth-form-panel {
-  background: #fff;
+  background: var(--bn-surface);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -98,12 +127,13 @@ a { text-decoration: none; }
 .form-control, .form-select {
   border-radius: 10px;
   padding: 10px 14px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--bn-border);
+  color: var(--bn-ink);
 }
 
 .form-control:focus, .form-select:focus {
-  border-color: var(--bn-amber);
-  box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.15);
+  border-color: var(--bn-primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.14);
 }
 
 .btn {
@@ -113,14 +143,24 @@ a { text-decoration: none; }
 }
 
 .btn-brand {
-  background: linear-gradient(135deg, var(--bn-amber), var(--bn-amber-dark));
+  background: var(--bn-primary);
   border: none;
-  color: #16304f;
+  color: #fff;
 }
 
-.btn-brand:hover {
-  background: linear-gradient(135deg, var(--bn-amber-dark), var(--bn-amber));
-  color: #16304f;
+.btn-brand:hover, .btn-brand:focus {
+  background: var(--bn-primary-dark);
+  color: #fff;
+}
+
+.btn-outline-secondary {
+  border-color: var(--bn-border);
+  color: var(--bn-ink-soft);
+}
+
+.btn-outline-secondary:hover {
+  background: var(--bn-ink);
+  border-color: var(--bn-ink);
 }
 
 /* ---------------------------- تخطيط لوحة التحكم ---------------------------- */
@@ -132,13 +172,14 @@ a { text-decoration: none; }
 .sidebar {
   width: 260px;
   flex-shrink: 0;
-  background: linear-gradient(180deg, var(--bn-navy) 0%, var(--bn-navy-dark) 100%);
+  background: var(--bn-navy-dark);
   color: #cbd5e1;
   position: sticky;
   top: 0;
   height: 100vh;
   overflow-y: auto;
   transition: margin-right 0.25s ease;
+  border-left: 1px solid rgba(255,255,255,0.06);
 }
 
 .sidebar::-webkit-scrollbar { width: 6px; }
@@ -159,11 +200,11 @@ a { text-decoration: none; }
   width: 38px;
   height: 38px;
   border-radius: 10px;
-  background: linear-gradient(135deg, var(--bn-amber), var(--bn-amber-dark));
+  background: var(--bn-primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #16304f;
+  color: #fff;
   font-size: 20px;
   font-weight: 800;
 }
@@ -199,14 +240,14 @@ a { text-decoration: none; }
 .sidebar .nav-link i { font-size: 17px; width: 20px; text-align: center; }
 
 .sidebar .nav-link:hover {
-  background: rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.05);
   color: #fff;
 }
 
 .sidebar .nav-link.active {
-  background: rgba(245,166,35,0.12);
-  color: var(--bn-amber);
-  border-right-color: var(--bn-amber);
+  background: rgba(99,102,241,0.16);
+  color: var(--bn-primary-tint);
+  border-right-color: var(--bn-primary-tint);
   font-weight: 700;
 }
 
@@ -218,24 +259,24 @@ a { text-decoration: none; }
 }
 
 .topbar {
-  background: #fff;
+  background: var(--bn-surface);
   padding: 14px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: var(--bn-shadow);
+  border-bottom: 1px solid var(--bn-border);
   position: sticky;
   top: 0;
   z-index: 10;
 }
 
 .topbar .company-pill {
-  background: #f1f5f9;
+  background: var(--bn-primary-light);
   border-radius: 999px;
   padding: 6px 14px;
   font-size: 12px;
   font-weight: 600;
-  color: #334155;
+  color: var(--bn-primary-dark);
 }
 
 .page-body {
@@ -255,19 +296,19 @@ a { text-decoration: none; }
 .page-title {
   font-size: 18px;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--bn-ink);
   margin: 0;
 }
 
 .page-subtitle {
-  color: #64748b;
+  color: var(--bn-muted);
   font-size: 11.5px;
   margin-top: 2px;
 }
 
 /* ---------------------------- بطاقات وإحصائيات ---------------------------- */
 .card {
-  border: none;
+  border: 1px solid var(--bn-border);
   border-radius: var(--bn-card-radius);
   box-shadow: var(--bn-shadow);
 }
@@ -275,7 +316,8 @@ a { text-decoration: none; }
 .stat-card {
   border-radius: var(--bn-card-radius);
   padding: 20px;
-  background: #fff;
+  background: var(--bn-surface);
+  border: 1px solid var(--bn-border);
   box-shadow: var(--bn-shadow);
   display: flex;
   align-items: center;
@@ -297,27 +339,28 @@ a { text-decoration: none; }
 .stat-value {
   font-size: 19px;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--bn-ink);
   line-height: 1.2;
 }
 
 .stat-label {
-  color: #64748b;
+  color: var(--bn-muted);
   font-size: 11px;
   font-weight: 600;
 }
 
-.bg-soft-amber { background: rgba(245,166,35,0.14); color: var(--bn-amber-dark); }
-.bg-soft-teal { background: rgba(14,165,163,0.14); color: var(--bn-teal); }
-.bg-soft-navy { background: rgba(15,33,56,0.1); color: var(--bn-navy); }
-.bg-soft-red { background: rgba(220,38,38,0.12); color: #dc2626; }
-.bg-soft-green { background: rgba(22,163,74,0.12); color: #16a34a; }
-.bg-soft-blue { background: rgba(37,99,235,0.12); color: #2563eb; }
+.bg-soft-amber { background: rgba(217,119,6,0.12); color: var(--bn-warning); }
+.bg-soft-teal { background: rgba(13,148,136,0.12); color: var(--bn-accent); }
+.bg-soft-navy { background: rgba(79,70,229,0.12); color: var(--bn-primary); }
+.bg-soft-red { background: rgba(220,38,38,0.12); color: var(--bn-danger); }
+.bg-soft-green { background: rgba(5,150,105,0.12); color: var(--bn-success); }
+.bg-soft-blue { background: rgba(2,132,199,0.12); color: var(--bn-info); }
 
 .card-header {
-  background: #fff;
-  border-bottom: 1px solid #eef1f5;
+  background: var(--bn-surface);
+  border-bottom: 1px solid var(--bn-border);
   font-weight: 700;
+  color: var(--bn-ink);
   padding: 16px 20px;
   border-radius: var(--bn-card-radius) var(--bn-card-radius) 0 0 !important;
 }
@@ -330,22 +373,23 @@ a { text-decoration: none; }
 
 .table thead th {
   background: #f8fafc;
-  color: #475569;
+  color: var(--bn-ink-soft);
   font-weight: 700;
   font-size: 11.5px;
   text-transform: uppercase;
   letter-spacing: .03em;
-  border-bottom: none;
+  border-bottom: 1px solid var(--bn-border);
   padding: 12px 14px;
 }
 
 .table tbody td {
   padding: 12px 14px;
   vertical-align: middle;
-  border-color: #f1f5f9;
+  border-color: #f1f2f8;
+  color: var(--bn-ink-soft);
 }
 
-.table-hover tbody tr:hover { background: #fbfcfe; }
+.table-hover tbody tr:hover { background: #fafaff; }
 
 .badge { font-weight: 600; padding: 5px 10px; border-radius: 7px; }
 
@@ -353,7 +397,7 @@ a { text-decoration: none; }
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--bn-navy), var(--bn-navy-light));
+  background: var(--bn-primary-dark);
   color: #fff;
   display: flex;
   align-items: center;
@@ -370,11 +414,12 @@ a { text-decoration: none; }
 
 .empty-state i { font-size: 48px; margin-bottom: 14px; display: block; color: #cbd5e1; }
 
-.form-label { font-weight: 600; color: #334155; font-size: 12.5px; }
+.form-label { font-weight: 600; color: var(--bn-ink-soft); font-size: 12.5px; }
 
 .section-card { padding: 22px; }
 
-.progress { height: 8px; border-radius: 6px; }
+.progress { height: 8px; border-radius: 6px; background: var(--bn-border); }
+.progress-bar { background-color: var(--bn-primary); }
 
 footer.app-footer {
   text-align: center;
@@ -402,7 +447,7 @@ footer.app-footer {
 }
 
 .login-link-brand {
-  color: var(--bn-amber);
+  color: var(--bn-primary);
   font-weight: 700;
 }
 

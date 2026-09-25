@@ -46,10 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     والمشتريات في مكان واحد — مصممة خصيصاً لشركات المقاولات والإنشاءات.
                 </p>
                 <ul class="list-unstyled text-white-50">
-                    <li class="mb-2"><i class="bi bi-check-circle-fill text-warning me-2"></i> إدارة كاملة للمشاريع والعقود</li>
-                    <li class="mb-2"><i class="bi bi-check-circle-fill text-warning me-2"></i> فواتير ومتابعة مالية دقيقة</li>
-                    <li class="mb-2"><i class="bi bi-check-circle-fill text-warning me-2"></i> إدارة الموظفين والحضور والرواتب</li>
-                    <li class="mb-2"><i class="bi bi-check-circle-fill text-warning me-2"></i> مخزون ومشتريات ذكية</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill me-2" style="color: var(--bn-accent-tint);"></i> إدارة كاملة للمشاريع والعقود</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill me-2" style="color: var(--bn-accent-tint);"></i> فواتير ومتابعة مالية دقيقة</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill me-2" style="color: var(--bn-accent-tint);"></i> إدارة الموظفين والحضور والرواتب</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill me-2" style="color: var(--bn-accent-tint);"></i> مخزون ومشتريات ذكية</li>
                 </ul>
             </div>
         </div>
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="auth-form-panel h-100">
                 <div class="auth-card">
                     <div class="d-lg-none text-center mb-4">
-                        <div class="auth-logo mx-auto" style="background:linear-gradient(135deg,#f5a623,#d98e0f);">ب</div>
+                        <div class="auth-logo mx-auto">ب</div>
                     </div>
                     <h3 class="fw-bold mb-1">تسجيل الدخول</h3>
                     <p class="text-muted mb-4">مرحباً بعودتك، الرجاء إدخال بياناتك للمتابعة</p>
