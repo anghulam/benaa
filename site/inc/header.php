@@ -46,20 +46,33 @@ $navLinks = [
                 <?php endif; ?>
                 <span><?= e(APP_NAME) ?></span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#siteNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#siteNav" aria-controls="siteNav">
                 <i class="bi bi-list fs-3"></i>
             </button>
-            <div class="collapse navbar-collapse" id="siteNav">
-                <ul class="navbar-nav mx-auto gap-lg-2">
-                    <?php foreach ($navLinks as $key => $link): ?>
-                        <li class="nav-item">
-                            <a class="nav-link site-nav-link <?= $activeNav === $key ? 'active' : '' ?>" href="<?= BASE_URL . $link['href'] ?>"><?= e($link['label']) ?></a>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-                <div class="d-flex gap-2 mt-3 mt-lg-0">
-                    <a href="<?= BASE_URL ?>/modules/auth/login.php" class="btn btn-outline-navy">تسجيل الدخول</a>
-                    <a href="<?= BASE_URL ?>/modules/auth/register.php" class="btn btn-brand">ابدأ تجربتك المجانية</a>
+            <div class="offcanvas offcanvas-lg offcanvas-start site-offcanvas" tabindex="-1" id="siteNav">
+                <div class="offcanvas-header d-lg-none">
+                    <span class="site-brand">
+                        <?php if ($siteLogo): ?>
+                            <img src="<?= BASE_URL ?>/uploads/<?= e($siteLogo) ?>" class="brand-logo-img" alt="<?= e(APP_NAME) ?>">
+                        <?php else: ?>
+                            <span class="badge-mark">ب</span>
+                        <?php endif; ?>
+                        <span><?= e(APP_NAME) ?></span>
+                    </span>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="إغلاق"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav mx-lg-auto gap-lg-2">
+                        <?php foreach ($navLinks as $key => $link): ?>
+                            <li class="nav-item">
+                                <a class="nav-link site-nav-link <?= $activeNav === $key ? 'active' : '' ?>" href="<?= BASE_URL . $link['href'] ?>"><?= e($link['label']) ?></a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <div class="d-flex gap-2 mt-4 mt-lg-0">
+                        <a href="<?= BASE_URL ?>/modules/auth/login.php" class="btn btn-outline-navy">تسجيل الدخول</a>
+                        <a href="<?= BASE_URL ?>/modules/auth/register.php" class="btn btn-brand">ابدأ تجربتك المجانية</a>
+                    </div>
                 </div>
             </div>
         </nav>
