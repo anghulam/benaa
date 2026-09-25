@@ -60,8 +60,13 @@ function planModules(int $planId): ?array
 {
     static $cache = [];
     if (!array_key_exists($planId, $cache)) {
-        $rows = dbFetchAll('SELECT module_key, enabled FROM plan_modules WHERE plan_id = ?', 'i', [$planId]);
-        $cache[$planId] = empty($rows) ? null : array_map('boolval', array_column($rows, 'enabled', 'module_key'));
+        try {
+            $rows = dbFetchAll('SELECT module_key, enabled FROM plan_modules WHERE plan_id = ?', 'i', [$planId]);
+            $cache[$planId] = empty($rows) ? null : array_map('boolval', array_column($rows, 'enabled', 'module_key'));
+        } catch (mysqli_sql_exception $e) {
+            error_log('planModules: ' . $e->getMessage());
+            $cache[$planId] = null;
+        }
     }
     return $cache[$planId];
 }
