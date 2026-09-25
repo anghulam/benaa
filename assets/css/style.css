@@ -138,11 +138,11 @@ h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.02em; font-wei
    لعنصر img ذي عرض أضيق من حاوية flex-column) */
 .auth-logo-img {
   display: block;
-  max-height: 58px;
-  max-width: 220px;
+  max-height: 88px;
+  max-width: 280px;
   width: auto;
   object-fit: contain;
-  margin: 0 auto 24px;
+  margin: 0 auto 40px;
 }
 
 .auth-form-panel {
