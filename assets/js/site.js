@@ -17,4 +17,16 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
+
+    // قائمة الموبايل المنسدلة جزء من الشريط الثابت (sticky)؛ فتحها أثناء
+    // التمرير لأسفل يوسّع الشريط في مكانه فيظهر خارج الجزء المرئي من الشاشة.
+    // نعيد التمرير لأعلى الصفحة عند فتحها حتى تكون مرئية دوماً.
+    var mobileMenu = document.getElementById('siteNav');
+    if (mobileMenu) {
+        mobileMenu.addEventListener('show.bs.collapse', function () {
+            if (window.scrollY > SCROLL_THRESHOLD) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+    }
 })();
