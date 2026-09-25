@@ -24,6 +24,20 @@ CREATE TABLE IF NOT EXISTS subscription_plans (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ---------------------------------------------------------------------
+-- الوحدات المفعّلة لكل باقة اشتراك - يحدّدها مالك النظام عند تعديل الباقة.
+-- عدم وجود أي صف لباقة معيّنة يعني عدم تخصيصها بعد، فتُعامَل كباقة تتيح
+-- كل الوحدات (سلوك افتراضي متوافق مع الباقات القائمة قبل هذه الميزة).
+-- ---------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS plan_modules (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    plan_id INT UNSIGNED NOT NULL,
+    module_key VARCHAR(50) NOT NULL,
+    enabled TINYINT(1) NOT NULL DEFAULT 1,
+    UNIQUE KEY uniq_plan_module (plan_id, module_key),
+    CONSTRAINT fk_plan_modules_plan FOREIGN KEY (plan_id) REFERENCES subscription_plans(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ---------------------------------------------------------------------
 -- الشركات المشتركة (المستأجرون - Tenants)
 -- ---------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS companies (

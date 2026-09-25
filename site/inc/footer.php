@@ -48,6 +48,11 @@
     </div>
 </footer>
 
+<button type="button" id="backToTop" class="back-to-top no-print" aria-label="العودة لأعلى الصفحة">
+    <i class="bi bi-arrow-up"></i>
+</button>
+
 <script src="<?= BASE_URL ?>/assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="<?= BASE_URL ?>/assets/js/site.js"></script>
 </body>
 </html>

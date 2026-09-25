@@ -51,6 +51,41 @@ function customizableRoles(): array
     return ['admin', 'manager', 'accountant', 'engineer', 'employee'];
 }
 
+/**
+ * جلب تخصيص الوحدات المفعّلة لباقة اشتراك معيّنة (خريطة module_key => enabled).
+ * ترجع null إن لم يخصّص مالك النظام هذه الباقة بعد، فتُعامَل الباقة حينها
+ * كأنها تتيح كل الوحدات (توافقاً مع الباقات التي أُنشئت قبل هذه الميزة).
+ */
+function planModules(int $planId): ?array
+{
+    static $cache = [];
+    if (!array_key_exists($planId, $cache)) {
+        $rows = dbFetchAll('SELECT module_key, enabled FROM plan_modules WHERE plan_id = ?', 'i', [$planId]);
+        $cache[$planId] = empty($rows) ? null : array_map('boolval', array_column($rows, 'enabled', 'module_key'));
+    }
+    return $cache[$planId];
+}
+
+/** هل تتيح باقة اشتراك الشركة الوصول لوحدة معيّنة؟ شركة بلا باقة محددة = بلا تقييد */
+function companyPlanAllowsModule(int $companyId, string $module): bool
+{
+    static $planIdCache = [];
+    if (!array_key_exists($companyId, $planIdCache)) {
+        $company = dbFetchOne('SELECT plan_id FROM companies WHERE id = ?', 'i', [$companyId]);
+        $planIdCache[$companyId] = $company['plan_id'] ?? null;
+    }
+    $planId = $planIdCache[$companyId];
+    if (!$planId) {
+        return true;
+    }
+
+    $modules = planModules((int) $planId);
+    if ($modules === null) {
+        return true;
+    }
+    return !empty($modules[$module]);
+}
+
 /** الصلاحيات الافتراضية المرتبطة بكل دور - تُستخدم قبل أي تخصيص من صاحب الشركة */
 function defaultRolePermissions(string $role): array
 {
@@ -140,8 +175,18 @@ function can(string $module): bool
     if ($module === 'dashboard') {
         return true; // متاحة دوماً لأي مستخدم مسجّل داخل الشركة
     }
+
+    $companyId = currentCompanyId();
+
+    // تقييد الباقة يسري على الجميع (بمن فيهم المالك)، فهو خاص بما تشمله باقة
+    // الاشتراك من ميزات، وليس صلاحية داخلية يمكن للمالك تجاوزها. يُستثنى منه
+    // "roles" لأنه إدارة صلاحيات داخلية وليس ميزة مشمولة بالباقة.
+    if ($module !== 'roles' && $companyId && !companyPlanAllowsModule($companyId, $module)) {
+        return false;
+    }
+
     if ($user['role'] === 'owner') {
-        return true; // المالك يملك كل الصلاحيات دائماً ولا يمكن تقييده
+        return true; // المالك يملك كل الصلاحيات المتاحة ضمن الباقة دائماً ولا يمكن تقييده بالدور
     }
     if ($module === 'roles') {
         // إدارة مصفوفة الصلاحيات نفسها متاحة فقط للمالك (أعلاه) ومدير النظام،
@@ -149,7 +194,6 @@ function can(string $module): bool
         return $user['role'] === 'admin';
     }
 
-    $companyId = currentCompanyId();
     $overrides = $companyId ? companyRoleOverrides($companyId, $user['role']) : null;
     if ($overrides !== null) {
         return !empty($overrides[$module]);
