@@ -91,8 +91,8 @@ $activeModule = 'superadmin-plans';
 require __DIR__ . '/../includes/header.php';
 ?>
 
-<div class="row justify-content-center">
-    <div class="col-lg-7">
+<div class="row">
+    <div class="col-12">
         <div class="card">
             <div class="card-body section-card">
                 <?php foreach ($errors as $err): ?><div class="alert alert-danger"><?= e($err) ?></div><?php endforeach; ?>
@@ -148,7 +148,7 @@ require __DIR__ . '/../includes/header.php';
                     </p>
                     <div class="row">
                         <?php foreach (permissionModulesList() as $moduleKey => $moduleLabel): ?>
-                            <div class="col-md-4 col-6 mb-2">
+                            <div class="col-lg-2 col-md-3 col-6 mb-2">
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="module_<?= e($moduleKey) ?>"
                                            name="module[<?= e($moduleKey) ?>]"
