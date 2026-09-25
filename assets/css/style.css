@@ -1,35 +1,37 @@
 /* =====================================================================
    نظام بناء - Benaa Construction Management SaaS
-   هوية بصرية جديدة: نيلي احترافي عصري (Indigo Professional)
+   هوية بصرية: SaaS عصرية متدرجة (Gradient Premium)
    Bootstrap 5 RTL
    ===================================================================== */
 
 :root {
-  /* الهوية الأساسية */
-  --bn-primary: #4f46e5;
-  --bn-primary-dark: #4338ca;
-  --bn-primary-darker: #312e81;
-  --bn-primary-light: #eef2ff;
-  --bn-primary-tint: #a5b4fc;
-  --bn-accent: #0d9488;
-  --bn-accent-tint: #5eead4;
+  /* الهوية الأساسية - تدرج بنفسجي/نيلي/أزرق */
+  --bn-primary: #6d28d9;
+  --bn-primary-2: #4f46e5;
+  --bn-primary-3: #2563eb;
+  --bn-primary-dark: #5b21b6;
+  --bn-primary-darker: #1e1b4b;
+  --bn-primary-light: #f2effd;
+  --bn-primary-tint: #c4b5fd;
+  --bn-accent: #06b6d4;
+  --bn-accent-tint: #67e8f9;
+  --bn-gradient: linear-gradient(135deg, #7c3aed 0%, #4f46e5 55%, #2563eb 100%);
+  --bn-gradient-soft: linear-gradient(135deg, rgba(124,58,237,0.10) 0%, rgba(37,99,235,0.10) 100%);
 
-  /* أسماء متوافقة مع الكود القديم (تُستخدم عبر الملف وملف الموقع
-     التسويقي) - أُعيد ربطها بالهوية الجديدة بدل حذفها لتفادي إعادة
-     كتابة كل استدعاء على حدة */
-  --bn-navy: var(--bn-primary);
-  --bn-navy-dark: #0f172a;
+  /* أسماء متوافقة مع الكود القديم */
+  --bn-navy: var(--bn-primary-2);
+  --bn-navy-dark: #0a0e17;
   --bn-navy-light: #6366f1;
   --bn-amber: var(--bn-primary);
   --bn-amber-dark: var(--bn-primary-dark);
   --bn-teal: var(--bn-accent);
 
   /* محايدات */
-  --bn-ink: #0f172a;
-  --bn-ink-soft: #334155;
-  --bn-muted: #64748b;
-  --bn-border: #e5e7f0;
-  --bn-bg: #f7f8fc;
+  --bn-ink: #0b0e17;
+  --bn-ink-soft: #384056;
+  --bn-muted: #6b7280;
+  --bn-border: #e8e8f2;
+  --bn-bg: #f8f8fc;
   --bn-surface: #ffffff;
 
   /* دلالية */
@@ -38,10 +40,11 @@
   --bn-danger: #dc2626;
   --bn-info: #0284c7;
 
-  --bn-card-radius: 12px;
-  --bn-radius-lg: 16px;
-  --bn-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 6px 20px rgba(15, 23, 42, 0.05);
-  --bn-shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.12);
+  --bn-card-radius: 16px;
+  --bn-radius-lg: 20px;
+  --bn-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(31, 20, 90, 0.06);
+  --bn-shadow-lg: 0 20px 50px rgba(31, 20, 90, 0.16);
+  --bn-shadow-glow: 0 10px 28px rgba(109, 40, 217, 0.28);
 }
 
 * { box-sizing: border-box; }
@@ -66,14 +69,14 @@ body {
 
 a { text-decoration: none; }
 
-h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.01em; }
+h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.02em; font-weight: 800; }
 
 /* ---------------------------- شاشات الدخول ---------------------------- */
 .auth-page {
   min-height: 100vh;
   display: flex;
   align-items: stretch;
-  background: linear-gradient(160deg, var(--bn-primary-darker) 0%, var(--bn-navy-dark) 100%);
+  background: var(--bn-navy-dark);
 }
 
 .auth-brand-panel {
@@ -84,23 +87,29 @@ h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.01em; }
   color: #fff;
   position: relative;
   overflow: hidden;
+  background: radial-gradient(circle at 20% 20%, rgba(124,58,237,0.55) 0%, transparent 50%),
+              radial-gradient(circle at 85% 80%, rgba(6,182,212,0.35) 0%, transparent 50%),
+              var(--bn-navy-dark);
 }
 
 .auth-brand-panel::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle at 15% 15%, rgba(99,102,241,0.35) 0%, transparent 45%),
-                     radial-gradient(circle at 85% 85%, rgba(13,148,136,0.22) 0%, transparent 45%);
+  background-image:
+    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at 30% 30%, black 0%, transparent 70%);
 }
 
 .auth-brand-panel > * { position: relative; z-index: 1; }
 
 .auth-logo {
-  width: 56px;
-  height: 56px;
-  border-radius: var(--bn-card-radius);
-  background: var(--bn-primary);
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  background: var(--bn-gradient);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -108,7 +117,7 @@ h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.01em; }
   color: #fff;
   font-weight: 800;
   margin-bottom: 24px;
-  box-shadow: 0 8px 24px rgba(79, 70, 229, 0.35);
+  box-shadow: var(--bn-shadow-glow);
 }
 
 .auth-form-panel {
@@ -125,32 +134,37 @@ h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.01em; }
 }
 
 .form-control, .form-select {
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 10px 14px;
-  border: 1px solid var(--bn-border);
+  border: 1.5px solid var(--bn-border);
   color: var(--bn-ink);
+  transition: border-color .15s ease, box-shadow .15s ease;
 }
 
 .form-control:focus, .form-select:focus {
-  border-color: var(--bn-primary);
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.14);
+  border-color: var(--bn-primary-2);
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
 }
 
 .btn {
-  border-radius: 10px;
-  font-weight: 600;
-  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  padding: 10px 22px;
+  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
 }
 
 .btn-brand {
-  background: var(--bn-primary);
+  background: var(--bn-gradient);
   border: none;
   color: #fff;
+  box-shadow: var(--bn-shadow-glow);
 }
 
 .btn-brand:hover, .btn-brand:focus {
-  background: var(--bn-primary-dark);
   color: #fff;
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 32px rgba(109, 40, 217, 0.34);
 }
 
 .btn-outline-secondary {
@@ -161,6 +175,7 @@ h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.01em; }
 .btn-outline-secondary:hover {
   background: var(--bn-ink);
   border-color: var(--bn-ink);
+  transform: translateY(-1px);
 }
 
 /* ---------------------------- تخطيط لوحة التحكم ---------------------------- */
@@ -170,16 +185,17 @@ h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.01em; }
 }
 
 .sidebar {
-  width: 260px;
+  width: 264px;
   flex-shrink: 0;
   background: var(--bn-navy-dark);
-  color: #cbd5e1;
+  color: #aab0c4;
   position: sticky;
   top: 0;
   height: 100vh;
   overflow-y: auto;
   transition: margin-right 0.25s ease;
   border-left: 1px solid rgba(255,255,255,0.06);
+  background-image: radial-gradient(circle at 0% 0%, rgba(124,58,237,0.20) 0%, transparent 45%);
 }
 
 .sidebar::-webkit-scrollbar { width: 6px; }
@@ -199,14 +215,15 @@ h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.01em; }
 .sidebar-brand .badge-mark {
   width: 38px;
   height: 38px;
-  border-radius: 10px;
-  background: var(--bn-primary);
+  border-radius: 11px;
+  background: var(--bn-gradient);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
   font-size: 20px;
   font-weight: 800;
+  box-shadow: var(--bn-shadow-glow);
 }
 
 .brand-logo-img {
@@ -221,12 +238,12 @@ h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.01em; }
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: .08em;
-  color: #64748b;
+  color: #5b6172;
   padding: 16px 18px 6px;
 }
 
 .sidebar .nav-link {
-  color: #cbd5e1;
+  color: #aab0c4;
   padding: 10px 18px;
   display: flex;
   align-items: center;
@@ -235,6 +252,7 @@ h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.01em; }
   font-weight: 500;
   font-size: 13px;
   border-right: 3px solid transparent;
+  transition: background .15s ease, color .15s ease;
 }
 
 .sidebar .nav-link i { font-size: 17px; width: 20px; text-align: center; }
@@ -245,8 +263,8 @@ h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.01em; }
 }
 
 .sidebar .nav-link.active {
-  background: rgba(99,102,241,0.16);
-  color: var(--bn-primary-tint);
+  background: linear-gradient(90deg, rgba(124,58,237,0.22), rgba(37,99,235,0.10));
+  color: #fff;
   border-right-color: var(--bn-primary-tint);
   font-weight: 700;
 }
@@ -275,7 +293,7 @@ h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.01em; }
   border-radius: 999px;
   padding: 6px 14px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--bn-primary-dark);
 }
 
@@ -294,10 +312,11 @@ h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.01em; }
 }
 
 .page-title {
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 800;
   color: var(--bn-ink);
   margin: 0;
+  letter-spacing: -0.02em;
 }
 
 .page-subtitle {
@@ -311,6 +330,7 @@ h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.01em; }
   border: 1px solid var(--bn-border);
   border-radius: var(--bn-card-radius);
   box-shadow: var(--bn-shadow);
+  transition: box-shadow .2s ease, transform .2s ease;
 }
 
 .stat-card {
@@ -323,17 +343,24 @@ h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.01em; }
   align-items: center;
   gap: 16px;
   height: 100%;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.stat-card:hover {
+  box-shadow: var(--bn-shadow-lg);
+  transform: translateY(-2px);
 }
 
 .stat-icon {
   width: 52px;
   height: 52px;
-  border-radius: 12px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 24px;
   flex-shrink: 0;
+  color: #fff;
 }
 
 .stat-value {
@@ -349,12 +376,12 @@ h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.01em; }
   font-weight: 600;
 }
 
-.bg-soft-amber { background: rgba(217,119,6,0.12); color: var(--bn-warning); }
-.bg-soft-teal { background: rgba(13,148,136,0.12); color: var(--bn-accent); }
-.bg-soft-navy { background: rgba(79,70,229,0.12); color: var(--bn-primary); }
-.bg-soft-red { background: rgba(220,38,38,0.12); color: var(--bn-danger); }
-.bg-soft-green { background: rgba(5,150,105,0.12); color: var(--bn-success); }
-.bg-soft-blue { background: rgba(2,132,199,0.12); color: var(--bn-info); }
+.bg-soft-amber { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.bg-soft-teal { background: linear-gradient(135deg, #22d3ee, #0d9488); }
+.bg-soft-navy { background: var(--bn-gradient); }
+.bg-soft-red { background: linear-gradient(135deg, #f87171, #dc2626); }
+.bg-soft-green { background: linear-gradient(135deg, #34d399, #059669); }
+.bg-soft-blue { background: linear-gradient(135deg, #38bdf8, #0284c7); }
 
 .card-header {
   background: var(--bn-surface);
@@ -389,15 +416,15 @@ h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.01em; }
   color: var(--bn-ink-soft);
 }
 
-.table-hover tbody tr:hover { background: #fafaff; }
+.table-hover tbody tr:hover { background: #faf9ff; }
 
-.badge { font-weight: 600; padding: 5px 10px; border-radius: 7px; }
+.badge { font-weight: 700; padding: 5px 11px; border-radius: 999px; }
 
 .avatar-circle {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: var(--bn-primary-dark);
+  background: var(--bn-gradient);
   color: #fff;
   display: flex;
   align-items: center;
@@ -419,7 +446,7 @@ h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.01em; }
 .section-card { padding: 22px; }
 
 .progress { height: 8px; border-radius: 6px; background: var(--bn-border); }
-.progress-bar { background-color: var(--bn-primary); }
+.progress-bar { background: var(--bn-gradient); }
 
 footer.app-footer {
   text-align: center;
@@ -433,7 +460,7 @@ footer.app-footer {
     position: fixed;
     right: 0;
     z-index: 1040;
-    margin-right: -260px;
+    margin-right: -264px;
   }
   .sidebar.show { margin-right: 0; }
   .sidebar-overlay {
@@ -447,7 +474,7 @@ footer.app-footer {
 }
 
 .login-link-brand {
-  color: var(--bn-primary);
+  color: var(--bn-primary-2);
   font-weight: 700;
 }
 
