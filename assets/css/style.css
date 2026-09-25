@@ -26,7 +26,7 @@ body {
   font-family: 'Cairo', 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
   background: var(--bn-bg);
   color: #1f2937;
-  font-size: 13.5px;
+  font-size: 12.5px;
 }
 
 a { text-decoration: none; }
@@ -143,7 +143,7 @@ a { text-decoration: none; }
   border-bottom: 1px solid rgba(255,255,255,0.08);
   color: #fff;
   font-weight: 800;
-  font-size: 16.5px;
+  font-size: 15px;
 }
 
 .sidebar-brand .badge-mark {
@@ -183,7 +183,7 @@ a { text-decoration: none; }
   gap: 12px;
   border-radius: 0;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 13px;
   border-right: 3px solid transparent;
 }
 
@@ -224,7 +224,7 @@ a { text-decoration: none; }
   background: #f1f5f9;
   border-radius: 999px;
   padding: 6px 14px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: #334155;
 }
@@ -244,7 +244,7 @@ a { text-decoration: none; }
 }
 
 .page-title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 800;
   color: #0f172a;
   margin: 0;
@@ -252,7 +252,7 @@ a { text-decoration: none; }
 
 .page-subtitle {
   color: #64748b;
-  font-size: 12.5px;
+  font-size: 11.5px;
   margin-top: 2px;
 }
 
@@ -286,7 +286,7 @@ a { text-decoration: none; }
 }
 
 .stat-value {
-  font-size: 21px;
+  font-size: 19px;
   font-weight: 800;
   color: #0f172a;
   line-height: 1.2;
@@ -294,7 +294,7 @@ a { text-decoration: none; }
 
 .stat-label {
   color: #64748b;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
 }
 
@@ -323,7 +323,7 @@ a { text-decoration: none; }
   background: #f8fafc;
   color: #475569;
   font-weight: 700;
-  font-size: 12.5px;
+  font-size: 11.5px;
   text-transform: uppercase;
   letter-spacing: .03em;
   border-bottom: none;
@@ -350,7 +350,7 @@ a { text-decoration: none; }
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .empty-state {
@@ -361,7 +361,7 @@ a { text-decoration: none; }
 
 .empty-state i { font-size: 48px; margin-bottom: 14px; display: block; color: #cbd5e1; }
 
-.form-label { font-weight: 600; color: #334155; font-size: 13.5px; }
+.form-label { font-weight: 600; color: #334155; font-size: 12.5px; }
 
 .section-card { padding: 22px; }
 
@@ -371,7 +371,7 @@ footer.app-footer {
   text-align: center;
   padding: 16px;
   color: #94a3b8;
-  font-size: 12.5px;
+  font-size: 11.5px;
 }
 
 @media (max-width: 991px) {
