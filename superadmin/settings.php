@@ -44,6 +44,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         flash('success', 'تم حفظ بيانات التذييل والتواصل بنجاح');
         redirect('/superadmin/settings.php');
     }
+
+    if ($form === 'pricing') {
+        $rawPlans = $_POST['plans'] ?? [];
+        $featuredIndex = (int) post('featured_index', '-1');
+        $plans = [];
+        foreach ($rawPlans as $i => $p) {
+            $name = clean($p['name'] ?? '');
+            $price = clean($p['price'] ?? '');
+            $period = clean($p['period'] ?? '');
+            $desc = clean($p['desc'] ?? '');
+            $featuresRaw = (string) ($p['features'] ?? '');
+            $features = array_values(array_filter(array_map('trim', explode("\n", $featuresRaw)), fn ($f) => $f !== ''));
+            if ($name === '' || $price === '') {
+                continue;
+            }
+            $plans[] = [
+                'name' => $name,
+                'price' => $price,
+                'period' => $period,
+                'desc' => $desc,
+                'features' => $features,
+                'featured' => ((int) $i === $featuredIndex),
+            ];
+        }
+        if (empty($plans)) {
+            $errors[] = 'الرجاء إدخال بيانات باقة واحدة على الأقل (الاسم والسعر مطلوبان)';
+        } else {
+            setSystemSetting('pricing_plans', json_encode($plans, JSON_UNESCAPED_UNICODE));
+            flash('success', 'تم حفظ باقات الأسعار بنجاح');
+            redirect('/superadmin/settings.php');
+        }
+    }
 }
 
 $currentLogo = getSystemSetting('system_logo');
@@ -51,6 +83,18 @@ $currentPlatformName = appName();
 $currentContactEmail = getSystemSetting('contact_email', 'info@example.com');
 $currentContactPhone = getSystemSetting('contact_phone', '966+ 5XXXXXXXX');
 $currentFooterDescription = getSystemSetting('footer_description', 'منصة SaaS متكاملة لإدارة شركات المقاولات والإنشاءات — المشاريع، العقود، الفواتير، الموظفون، المخزون، والصلاحيات المخصصة، بواجهة عربية احترافية بالكامل.');
+$currentPlans = getPricingPlans();
+while (count($currentPlans) < 4) {
+    $currentPlans[] = ['name' => '', 'price' => '', 'period' => '', 'desc' => '', 'features' => [], 'featured' => false];
+}
+$currentFeaturedIndex = 0;
+foreach ($currentPlans as $__i => $__p) {
+    if (!empty($__p['featured'])) {
+        $currentFeaturedIndex = $__i;
+        break;
+    }
+}
+unset($__i, $__p);
 $googleClientId = getSystemSetting('google_client_id', '');
 $googleClientSecret = getSystemSetting('google_client_secret', '');
 $redirectUri = (!empty($_SERVER['HTTPS']) ? 'https://' : 'http://') . ($_SERVER['HTTP_HOST'] ?? 'your-domain.com') . BASE_URL . '/modules/settings/google_callback.php';
@@ -123,6 +167,52 @@ require __DIR__ . '/../includes/header.php';
                         <div class="form-text">تظهر هذه البيانات في تذييل كل صفحات الموقع التسويقي، وفي صفحة "تواصل معنا".</div>
                     </div>
                     <button class="btn btn-brand"><i class="bi bi-check-lg"></i> حفظ</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">باقات الأسعار (تظهر في الصفحة الرئيسية وصفحة الأسعار)</div>
+            <div class="card-body section-card">
+                <form method="post">
+                    <?= csrfField() ?>
+                    <input type="hidden" name="form" value="pricing">
+                    <div class="row g-3">
+                        <?php foreach ($currentPlans as $i => $plan): ?>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="border rounded p-3 h-100">
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="radio" name="featured_index" id="planFeatured<?= $i ?>" value="<?= $i ?>" <?= $i === $currentFeaturedIndex ? 'checked' : '' ?>>
+                                        <label class="form-check-label small" for="planFeatured<?= $i ?>">الباقة المميزة "الأكثر طلباً"</label>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label small">اسم الباقة</label>
+                                        <input type="text" name="plans[<?= $i ?>][name]" class="form-control form-control-sm" value="<?= e($plan['name']) ?>">
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label small">السعر (رقم، أو 0 لمجاناً)</label>
+                                        <input type="text" name="plans[<?= $i ?>][price]" class="form-control form-control-sm" value="<?= e($plan['price']) ?>">
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label small">الفترة (مثال: شهرياً)</label>
+                                        <input type="text" name="plans[<?= $i ?>][period]" class="form-control form-control-sm" value="<?= e($plan['period']) ?>">
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label small">وصف مختصر</label>
+                                        <input type="text" name="plans[<?= $i ?>][desc]" class="form-control form-control-sm" value="<?= e($plan['desc']) ?>">
+                                    </div>
+                                    <div class="mb-0">
+                                        <label class="form-label small">المزايا (سطر لكل ميزة)</label>
+                                        <textarea name="plans[<?= $i ?>][features]" class="form-control form-control-sm" rows="4"><?= e(implode("\n", $plan['features'])) ?></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="form-text mt-2">الباقة ذات السعر "0" تُعرض تلقائياً كباقة تجريبية مجانية. اتركوا اسم الباقة فارغاً لتجاهلها.</div>
+                    <button class="btn btn-brand mt-3"><i class="bi bi-check-lg"></i> حفظ باقات الأسعار</button>
                 </form>
             </div>
         </div>

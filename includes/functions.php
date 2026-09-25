@@ -60,6 +60,21 @@ function appName(): string
     return $name !== null && $name !== '' ? $name : APP_NAME;
 }
 
+/** باقات الأسعار المعروضة في الموقع التسويقي؛ تُقرأ من إعدادات السوبر أدمن
+ * إن وُجدت، وإلا ترجع للباقات الافتراضية */
+function getPricingPlans(): array
+{
+    require_once __DIR__ . '/pricing_defaults.php';
+    $json = getSystemSetting('pricing_plans');
+    if ($json) {
+        $decoded = json_decode($json, true);
+        if (is_array($decoded) && count($decoded) > 0) {
+            return $decoded;
+        }
+    }
+    return defaultPricingPlans();
+}
+
 /** تنقية سلسلة نصية وإزالة الفراغات الزائدة */
 function clean(?string $value): string
 {

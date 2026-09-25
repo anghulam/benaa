@@ -65,9 +65,9 @@ require __DIR__ . '/site/inc/header.php';
 <section class="site-section">
     <div class="container">
         <div class="text-center mb-5">
-            <span class="section-eyebrow">لماذا بناء</span>
+            <span class="section-eyebrow">لماذا <?= e($platformName) ?></span>
             <h2 class="section-title">كل ما تحتاجه شركة مقاولات، في نظام واحد</h2>
-            <p class="section-subtitle">من أول عملية بحث عن عميل حتى إقفال آخر فاتورة في المشروع — بناء يغطي دورة عمل المقاولات كاملة.</p>
+            <p class="section-subtitle">من أول عملية بحث عن عميل حتى إقفال آخر فاتورة في المشروع — <?= e($platformName) ?> يغطي دورة عمل المقاولات كاملة.</p>
         </div>
         <div class="row g-4">
             <div class="col-lg-4 col-md-6">
@@ -160,22 +160,41 @@ require __DIR__ . '/site/inc/header.php';
             <h2 class="section-title">باقات تناسب كل حجم شركة</h2>
             <p class="section-subtitle">من الشركات الناشئة إلى المؤسسات الكبرى — ابدأوا مجاناً وترقّوا وقتما احتجتم.</p>
         </div>
+        <?php
+        $homePlans = site_get_plans();
+        $homeTrialPlan = null;
+        $homeFeaturedPlan = null;
+        foreach ($homePlans as $__p) {
+            if ($homeTrialPlan === null && $__p['price'] === '0') $homeTrialPlan = $__p;
+            if (!empty($__p['featured'])) $homeFeaturedPlan = $__p;
+        }
+        if ($homeTrialPlan === null) $homeTrialPlan = $homePlans[0] ?? null;
+        if ($homeFeaturedPlan === null) $homeFeaturedPlan = $homePlans[1] ?? ($homePlans[0] ?? null);
+        unset($__p);
+        ?>
         <div class="row g-4 justify-content-center">
-            <div class="col-lg-3 col-md-6">
-                <div class="pricing-card text-center">
-                    <h6 class="text-muted fw-bold mb-2">تجريبية</h6>
-                    <div class="price">مجاناً</div>
-                    <p class="text-muted small mt-2">14 يوماً كاملة الميزات</p>
+            <?php if ($homeTrialPlan): ?>
+                <div class="col-lg-3 col-md-6">
+                    <div class="pricing-card text-center">
+                        <h6 class="text-muted fw-bold mb-2"><?= e($homeTrialPlan['name']) ?></h6>
+                        <div class="price">مجاناً</div>
+                        <p class="text-muted small mt-2"><?= e($homeTrialPlan['desc']) ?></p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="pricing-card featured text-center">
-                    <span class="featured-badge">الأكثر طلباً</span>
-                    <h6 class="text-muted fw-bold mb-2">احترافية</h6>
-                    <div class="price">249<small> ر.س/شهرياً</small></div>
-                    <p class="text-muted small mt-2">حتى 20 مستخدم و100 مشروع</p>
+            <?php endif; ?>
+            <?php if ($homeFeaturedPlan): ?>
+                <div class="col-lg-3 col-md-6">
+                    <div class="pricing-card featured text-center">
+                        <span class="featured-badge">الأكثر طلباً</span>
+                        <h6 class="text-muted fw-bold mb-2"><?= e($homeFeaturedPlan['name']) ?></h6>
+                        <div class="price">
+                            <?= $homeFeaturedPlan['price'] === '0' ? 'مجاناً' : e($homeFeaturedPlan['price']) ?>
+                            <?php if ($homeFeaturedPlan['price'] !== '0'): ?><small> ر.س/<?= e($homeFeaturedPlan['period']) ?></small><?php endif; ?>
+                        </div>
+                        <p class="text-muted small mt-2"><?= e($homeFeaturedPlan['desc']) ?></p>
+                    </div>
                 </div>
-            </div>
+            <?php endif; ?>
         </div>
         <div class="text-center mt-5">
             <a href="<?= BASE_URL ?>/pricing.php" class="btn btn-brand">عرض كل الباقات ومقارنة التفاصيل <i class="bi bi-arrow-left"></i></a>
