@@ -22,6 +22,15 @@ html, body {
   height: 100%;
 }
 
+/* حجم خط الجذر يتحكم بكل عناصر Bootstrap المبنية على وحدة rem (الأزرار،
+   الشارات، العناوين h1-h6 الافتراضية، حقول الإدخال، المسافات...)، وهو
+   منفصل تماماً عن font-size الموروث في body؛ تصغيره هنا هو ما يصغّر
+   "الإطار العام" لبوتستراب فعلياً في كل الصفحات (التطبيق والموقع
+   التسويقي معاً، فكلاهما يحمّل هذا الملف) */
+html {
+  font-size: 14px;
+}
+
 body {
   font-family: 'Cairo', 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
   background: var(--bn-bg);
