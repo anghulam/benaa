@@ -49,8 +49,11 @@
 
 * { box-sizing: border-box; }
 
+/* min-height لا height: ارتفاع ثابت على body يكسر position: sticky بمجرد
+   أن يتجاوز محتوى الصفحة ارتفاع الشاشة (يصبح مرجع الالتصاق صندوق body
+   الثابت بدل نافذة العرض الفعلية أثناء التمرير) */
 html, body {
-  height: 100%;
+  min-height: 100%;
 }
 
 /* حجم خط الجذر يتحكم بكل عناصر Bootstrap المبنية على وحدة rem (الأزرار،
@@ -90,6 +93,16 @@ h1, h2, h3, h4, h5, h6 { color: var(--bn-ink); letter-spacing: -0.02em; font-wei
   background: radial-gradient(circle at 20% 20%, rgba(124,58,237,0.55) 0%, transparent 50%),
               radial-gradient(circle at 85% 80%, rgba(6,182,212,0.35) 0%, transparent 50%),
               var(--bn-navy-dark);
+}
+
+/* قاعدة h1-h6 العامة تفرض لون كتابة داكن (لتباين واضح على خلفيات فاتحة)؛
+   هذه اللوحة خلفيتها داكنة، فلازم نصّ العنوان يبقى أبيض صراحةً بدل ما يرث
+   اللون الداكن العام */
+.auth-brand-panel h1,
+.auth-brand-panel h2,
+.auth-brand-panel h3,
+.auth-brand-panel h4 {
+  color: #fff;
 }
 
 .auth-brand-panel::before {
