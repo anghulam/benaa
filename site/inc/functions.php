@@ -110,6 +110,35 @@ if (!function_exists('site_get_platform_name')) {
     }
 }
 
+if (!function_exists('site_get_plans')) {
+    /**
+     * باقات الأسعار المعروضة في الصفحة الرئيسية وصفحة الأسعار (بنفس
+     * استقلالية دوال الموقع التسويقي أعلاه عن includes/bootstrap.php)،
+     * تُقرأ من إعدادات السوبر أدمن إن وُجدت، وإلا ترجع للباقات الافتراضية.
+     */
+    function site_get_plans(): array
+    {
+        require_once __DIR__ . '/../../includes/pricing_defaults.php';
+        try {
+            $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, (int) DB_PORT);
+            $conn->set_charset('utf8mb4');
+            $result = $conn->query("SELECT setting_value FROM system_settings WHERE setting_key = 'pricing_plans' LIMIT 1");
+            $row = $result ? $result->fetch_assoc() : null;
+            $conn->close();
+            $json = $row['setting_value'] ?? null;
+            if ($json) {
+                $decoded = json_decode($json, true);
+                if (is_array($decoded) && count($decoded) > 0) {
+                    return $decoded;
+                }
+            }
+        } catch (Throwable $e) {
+            // تجاهل الخطأ والرجوع للباقات الافتراضية
+        }
+        return defaultPricingPlans();
+    }
+}
+
 if (!function_exists('site_get_setting')) {
     /**
      * إعداد عام واحد من system_settings (بنفس استقلالية دوال الشعار واسم

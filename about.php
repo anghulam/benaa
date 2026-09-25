@@ -8,7 +8,7 @@ require __DIR__ . '/site/inc/header.php';
 <section class="page-hero">
     <div class="container">
         <h1>بُني خصيصاً لشركات المقاولات</h1>
-        <p>لم نبنِ نظام إدارة عام وأضفنا له بعض الحقول — بنينا بناء حول الطريقة الفعلية التي تعمل بها شركات المقاولات.</p>
+        <p>لم نبنِ نظام إدارة عام وأضفنا له بعض الحقول — بنينا <?= e($platformName) ?> حول الطريقة الفعلية التي تعمل بها شركات المقاولات.</p>
     </div>
 </section>
 
@@ -21,7 +21,7 @@ require __DIR__ . '/site/inc/header.php';
                 <p class="text-muted mb-4">
                     قطاع المقاولات معقّد بطبيعته: مشاريع طويلة، عقود متعددة الأطراف، فرق ميدانية ومكتبية،
                     ومخزون يتحرك يومياً. كثير من الشركات تدير كل هذا عبر جداول إكسل متفرقة وتطبيقات
-                    غير مترابطة. مهمتنا في بناء أن نجمع كل هذا في نظام واحد مترابط، بواجهة عربية
+                    غير مترابطة. مهمتنا في <?= e($platformName) ?> أن نجمع كل هذا في نظام واحد مترابط، بواجهة عربية
                     تفهمها فرق العمل الميدانية والإدارية على حد سواء.
                 </p>
                 <ul class="icon-check-list">
@@ -70,14 +70,14 @@ require __DIR__ . '/site/inc/header.php';
     <div class="container">
         <div class="text-center mb-5">
             <span class="section-eyebrow">قيمنا</span>
-            <h2 class="section-title">ما الذي يوجّه بناءنا للنظام</h2>
+            <h2 class="section-title">ما الذي يوجّه نظام <?= e($platformName) ?></h2>
         </div>
         <div class="row g-4">
             <div class="col-lg-4">
                 <div class="feature-card">
                     <div class="feature-icon bg-soft-navy"><i class="bi bi-eye"></i></div>
                     <h5>الوضوح قبل التعقيد</h5>
-                    <p>كل شاشة في بناء مصممة لتُفهم من أول نظرة، دون الحاجة لتدريب طويل.</p>
+                    <p>كل شاشة في <?= e($platformName) ?> مصممة لتُفهم من أول نظرة، دون الحاجة لتدريب طويل.</p>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -102,7 +102,7 @@ require __DIR__ . '/site/inc/header.php';
     <div class="container">
         <div class="cta-banner">
             <h2>هل تديرون شركة مقاولات؟</h2>
-            <p>انضموا إلى بناء وجرّبوا فرقاً حقيقياً في طريقة إدارة مشاريعكم.</p>
+            <p>انضموا إلى <?= e($platformName) ?> وجرّبوا فرقاً حقيقياً في طريقة إدارة مشاريعكم.</p>
             <a href="<?= BASE_URL ?>/modules/auth/register.php" class="btn btn-brand btn-lg px-5"><i class="bi bi-rocket-takeoff me-1"></i> ابدأ تجربتك المجانية</a>
         </div>
     </div>
