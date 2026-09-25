@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php else: ?>
                     <div class="auth-logo">ب</div>
                 <?php endif; ?>
-                <h2 class="fw-bold mb-3">نظام بناء لإدارة شركات المقاولات</h2>
+                <h2 class="fw-bold mb-3">نظام <?= e(appName()) ?> لإدارة شركات المقاولات</h2>
                 <p class="text-white-50 fs-6 mb-4" style="max-width:420px;">
                     منصة SaaS متكاملة لإدارة المشاريع، العقود، الفواتير، الموظفين، المخزون
                     والمشتريات في مكان واحد — مصممة خصيصاً لشركات المقاولات والإنشاءات.
@@ -91,6 +91,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <p class="text-center text-muted mt-4 mb-0">
                         ليس لديك حساب؟
                         <a href="<?= BASE_URL ?>/modules/auth/register.php" class="login-link-brand">سجّل شركتك الآن</a>
+                    </p>
+                    <p class="text-center mt-3 mb-0">
+                        <a href="<?= BASE_URL ?>/index.php" class="text-muted small"><i class="bi bi-house"></i> العودة للموقع الرئيسي</a>
                     </p>
                 </div>
             </div>

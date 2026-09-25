@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php else: ?>
                     <div class="auth-logo">ب</div>
                 <?php endif; ?>
-                <h2 class="fw-bold mb-3">ابدأ تجربتك المجانية الآن</h2>
+                <h2 class="fw-bold mb-3">ابدأ تجربتك المجانية في <?= e(appName()) ?> الآن</h2>
                 <p class="text-white-50 fs-6 mb-4" style="max-width:420px;">
                     14 يوماً مجاناً بدون بطاقة ائتمانية، لإدارة مشاريعك ومحاسبة شركتك بكل احترافية.
                 </p>
@@ -113,6 +113,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <p class="text-center text-muted mt-4 mb-0">
                         لديك حساب بالفعل؟
                         <a href="<?= BASE_URL ?>/modules/auth/login.php" class="login-link-brand">تسجيل الدخول</a>
+                    </p>
+                    <p class="text-center mt-3 mb-0">
+                        <a href="<?= BASE_URL ?>/index.php" class="text-muted small"><i class="bi bi-house"></i> العودة للموقع الرئيسي</a>
                     </p>
                 </div>
             </div>
