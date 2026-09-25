@@ -12,6 +12,19 @@ function e(?string $value): string
 }
 
 /**
+ * رقم إصدار الملف الثابت (بناءً على وقت آخر تعديل فعلي عليه)، يُضاف كـ query
+ * string لرابط الملف (مثال: style.css?v=1234) حتى يضطر أي كاش (متصفح أو
+ * CDN أو كاش على مستوى الاستضافة) لجلب نسخة جديدة فور تغيّر محتوى الملف،
+ * بدل الاحتفاظ بنسخة قديمة مرتبطة بنفس اسم الملف إلى ما لا نهاية.
+ */
+function assetVersion(string $relativePath): string
+{
+    $fullPath = ROOT_PATH . '/' . ltrim($relativePath, '/');
+    $mtime = @filemtime($fullPath);
+    return $mtime !== false ? (string) $mtime : '1';
+}
+
+/**
  * إعدادات النظام العامة (على مستوى المنصة بأكملها، لا شركة بعينها)
  * تُستخدم لشعار النظام وبيانات اعتماد Google OAuth.
  */

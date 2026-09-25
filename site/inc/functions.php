@@ -13,6 +13,20 @@ if (!function_exists('e')) {
     }
 }
 
+if (!function_exists('assetVersion')) {
+    /**
+     * رقم إصدار الملف الثابت (بناءً على وقت آخر تعديل فعلي عليه)، يُضاف كـ
+     * query string لرابط الملف حتى يضطر أي كاش (متصفح أو CDN أو كاش على
+     * مستوى الاستضافة) لجلب نسخة جديدة فور تغيّر محتوى الملف.
+     */
+    function assetVersion(string $relativePath): string
+    {
+        $fullPath = ROOT_PATH . '/' . ltrim($relativePath, '/');
+        $mtime = @filemtime($fullPath);
+        return $mtime !== false ? (string) $mtime : '1';
+    }
+}
+
 if (!function_exists('site_csrf_token')) {
     function site_csrf_token(): string
     {

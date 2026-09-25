@@ -30,8 +30,8 @@ $navLinks = [
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="<?= BASE_URL ?>/assets/vendor/bootstrap/bootstrap.rtl.min.css" rel="stylesheet">
 <link href="<?= BASE_URL ?>/assets/vendor/bootstrap-icons/bootstrap-icons.min.css" rel="stylesheet">
-<link href="<?= BASE_URL ?>/assets/css/style.css" rel="stylesheet">
-<link href="<?= BASE_URL ?>/assets/css/site.css" rel="stylesheet">
+<link href="<?= BASE_URL ?>/assets/css/style.css?v=<?= assetVersion('assets/css/style.css') ?>" rel="stylesheet">
+<link href="<?= BASE_URL ?>/assets/css/site.css?v=<?= assetVersion('assets/css/site.css') ?>" rel="stylesheet">
 </head>
 <body class="site-body">
 
