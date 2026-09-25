@@ -19,8 +19,13 @@ function getSystemSetting(string $key, ?string $default = null): ?string
 {
     static $cache = null;
     if ($cache === null) {
-        $rows = dbFetchAll('SELECT setting_key, setting_value FROM system_settings');
-        $cache = array_column($rows, 'setting_value', 'setting_key');
+        try {
+            $rows = dbFetchAll('SELECT setting_key, setting_value FROM system_settings');
+            $cache = array_column($rows, 'setting_value', 'setting_key');
+        } catch (mysqli_sql_exception $e) {
+            error_log('getSystemSetting: ' . $e->getMessage());
+            $cache = [];
+        }
     }
     return $cache[$key] ?? $default;
 }

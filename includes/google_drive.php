@@ -118,7 +118,12 @@ function googleDriveUserEmail(string $accessToken): ?string
 /** جلب سجل ربط Drive الخاص بالشركة إن وُجد */
 function googleDriveConnection(int $companyId): ?array
 {
-    return dbFetchOne('SELECT * FROM company_google_drive WHERE company_id = ?', 'i', [$companyId]);
+    try {
+        return dbFetchOne('SELECT * FROM company_google_drive WHERE company_id = ?', 'i', [$companyId]);
+    } catch (mysqli_sql_exception $e) {
+        error_log('googleDriveConnection: ' . $e->getMessage());
+        return null;
+    }
 }
 
 /**
