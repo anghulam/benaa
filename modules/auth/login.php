@@ -39,7 +39,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="row g-0 w-100">
         <div class="col-lg-6 d-none d-lg-flex">
             <div class="auth-brand-panel w-100">
-                <div class="auth-logo">ب</div>
+                <?php $__authLogo = getSystemSetting('system_logo'); ?>
+                <?php if ($__authLogo): ?>
+                    <img src="<?= BASE_URL ?>/uploads/<?= e($__authLogo) ?>" class="auth-logo-img" alt="<?= e(APP_NAME) ?>">
+                <?php else: ?>
+                    <div class="auth-logo">ب</div>
+                <?php endif; ?>
                 <h2 class="fw-bold mb-3">نظام بناء لإدارة شركات المقاولات</h2>
                 <p class="text-white-50 fs-6 mb-4" style="max-width:420px;">
                     منصة SaaS متكاملة لإدارة المشاريع، العقود، الفواتير، الموظفين، المخزون
@@ -57,7 +62,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="auth-form-panel h-100">
                 <div class="auth-card">
                     <div class="d-lg-none text-center mb-4">
-                        <div class="auth-logo mx-auto">ب</div>
+                        <?php if ($__authLogo): ?>
+                            <img src="<?= BASE_URL ?>/uploads/<?= e($__authLogo) ?>" class="auth-logo-img mx-auto" alt="<?= e(APP_NAME) ?>">
+                        <?php else: ?>
+                            <div class="auth-logo mx-auto">ب</div>
+                        <?php endif; ?>
                     </div>
                     <h3 class="fw-bold mb-1">تسجيل الدخول</h3>
                     <p class="text-muted mb-4">مرحباً بعودتك، الرجاء إدخال بياناتك للمتابعة</p>

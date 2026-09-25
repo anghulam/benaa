@@ -50,7 +50,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="row g-0 w-100">
         <div class="col-lg-6 d-none d-lg-flex">
             <div class="auth-brand-panel w-100">
-                <div class="auth-logo">ب</div>
+                <?php $__authLogo = getSystemSetting('system_logo'); ?>
+                <?php if ($__authLogo): ?>
+                    <img src="<?= BASE_URL ?>/uploads/<?= e($__authLogo) ?>" class="auth-logo-img" alt="<?= e(APP_NAME) ?>">
+                <?php else: ?>
+                    <div class="auth-logo">ب</div>
+                <?php endif; ?>
                 <h2 class="fw-bold mb-3">ابدأ تجربتك المجانية الآن</h2>
                 <p class="text-white-50 fs-6 mb-4" style="max-width:420px;">
                     14 يوماً مجاناً بدون بطاقة ائتمانية، لإدارة مشاريعك ومحاسبة شركتك بكل احترافية.

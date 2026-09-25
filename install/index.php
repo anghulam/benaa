@@ -196,7 +196,12 @@ $pageTitle = $pageTitle ?? 'تثبيت النظام';
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="text-center mb-4">
-                    <div class="auth-logo mx-auto">ب</div>
+                    <?php $__authLogo = getSystemSetting('system_logo'); ?>
+                    <?php if ($__authLogo): ?>
+                        <img src="<?= BASE_URL ?>/uploads/<?= e($__authLogo) ?>" class="auth-logo-img mx-auto" alt="<?= e(APP_NAME) ?>">
+                    <?php else: ?>
+                        <div class="auth-logo mx-auto">ب</div>
+                    <?php endif; ?>
                     <h3 class="fw-bold text-white mt-3 mb-0"><?= e(APP_NAME) ?></h3>
                     <p class="text-white-50">معالج التثبيت</p>
                 </div>
